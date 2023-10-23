@@ -15,8 +15,10 @@
     <div class="container-fluid g-0">
         @include('components.navbar')
         <main>
+
             @include('components.profile-card')
             @include('components.sidebar')
+
             @yield('content')
         </main>
     </div>

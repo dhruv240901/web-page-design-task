@@ -3,7 +3,6 @@
         <i class="fa-solid fa-bars"></i>
     </div>
 
-
     <a class="navbar-brand px-4" href="#"><b>Admin</b>Panel</a>
 
     <div class="navbar-collapse nav-items">
