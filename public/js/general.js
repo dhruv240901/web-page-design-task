@@ -39,6 +39,7 @@ $(document).ready(function() {
         let minute = datetime.getMinutes();
         $('.datetime').html(hour + ':' + minute + '<br>' + weekday)
     }, 1000);
+    $('#message').delay(3000).fadeOut();
 })
 
 $('#signupform').validate({
@@ -98,4 +99,4 @@ $('#loginform').validate({
 })
 
 
-$('#message').delay(3000).fadeOut();
+
