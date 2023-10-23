@@ -15,10 +15,10 @@
     <div class="container-fluid g-0">
         @include('components.navbar')
         <main>
-
-            @include('components.profile-card')
-            @include('components.sidebar')
-
+            @auth
+                @include('components.profile-card')
+                @include('components.sidebar')
+            @endauth
             @yield('content')
         </main>
     </div>
@@ -31,5 +31,13 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/general.js') }}"></script>
+<script>
+    $('#login-btn').click(function() {
+        let text = 'Are you sure you want to logout?'
+        if (confirm(text) == true) {
+            window.location.href = "{{ route('logout') }}";
+        }
+    })
+</script>
 
 </html>

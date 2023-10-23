@@ -15,8 +15,8 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', [HomeController::class,'index'])->name('index');
-// Route::get('signup', [AuthController::class,'signup'])->name('signup');
-// Route::post('signup', [AuthController::class,'CustomSignup'])->name('custom-signup');
-// Route::get('login',[AuthController::class,'login'])->name('login');
-// Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login');
-// Route::get('logout', [AuthController::class,'logout'])->name('logout');
+Route::get('signup', [AuthController::class,'signup'])->name('signup');
+Route::post('signup', [AuthController::class,'CustomSignup'])->name('custom-signup');
+Route::get('login',[AuthController::class,'login'])->name('login');
+Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login');
+Route::get('logout', [AuthController::class,'logout'])->name('logout');

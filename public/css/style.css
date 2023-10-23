@@ -33,6 +33,9 @@ nav {
     cursor: pointer;
 }
 
+.profile-card-item:hover{
+    background-color: aqua;
+}
 .msg-card-item {
     border-bottom: 1px solid
 }
