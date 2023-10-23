@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+
     <div class="display-area p-3">
+        @include('components.flash')
         <div class="row page-titles mt-3 day-time" style="float:right;margin-right:10px">
             <div class="col-md-6 col-4 align-self-center">
                 <div class=" float-right mr-2 hidden-sm-down">
@@ -28,7 +31,7 @@
             </div>
         </div>
         @endauth
-        
+
         @guest
         <div style="text-align: center;margin-top: 10%;font-family: 'Vesper Libre', serif;
         font-family: 'Young Serif', serif;">

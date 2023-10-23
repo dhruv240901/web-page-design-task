@@ -41,60 +41,61 @@ $(document).ready(function() {
     }, 1000);
 })
 
-// $('#signupform').validate({
-//     rules:{
-//         name:{
-//             required:true
-//         },
-//         email:{
-//             required:true,
-//             email:true
-//         },
-//         password:{
-//             required:true,
-//             minlength:6,
-//         },
-//     },
-//     messages:{
-//         name:"Please enter your name",
-//         email:{
-//             required:"Please enter your email",
-//             email:"Please enter valid email"
-//         },
-//         password:{
-//             required:"Please enter password",
-//             minlength:"Please enter password greater than or equal to 6 characters",
-//         },
-//     },
-//     submitHandler: function(form) {
-//         form.submit();
-//     }
-// })
+$('#signupform').validate({
+    rules:{
+        name:{
+            required:true
+        },
+        email:{
+            required:true,
+            email:true
+        },
+        password:{
+            required:true,
+            minlength:6,
+        },
+    },
+    messages:{
+        name:"Please enter your name",
+        email:{
+            required:"Please enter your email",
+            email:"Please enter valid email"
+        },
+        password:{
+            required:"Please enter password",
+            minlength:"Please enter password greater than or equal to 6 characters",
+        },
+    },
+    submitHandler: function(form) {
+        form.submit();
+    }
+})
 
-// $('#loginform').validate({
-//     rules:{
-//         email:{
-//             required:true,
-//             email:true
-//         },
-//         password:{
-//             required:true,
-//             minlength:6,
-//         },
-//     },
-//     messages:{
-//         email:{
-//             required:"Please enter your email",
-//             email:"Please enter valid email"
-//         },
-//         password:{
-//             required:"Please enter password",
-//             minlength:"Please enter password greater than or equal to 6 characters",
-//         },
-//     },
-//     submitHandler: function(form) {
-//         form.submit();
-//     }
-// })
+$('#loginform').validate({
+    rules:{
+        email:{
+            required:true,
+            email:true
+        },
+        password:{
+            required:true,
+            minlength:6,
+        },
+    },
+    messages:{
+        email:{
+            required:"Please enter your email",
+            email:"Please enter valid email"
+        },
+        password:{
+            required:"Please enter password",
+            minlength:"Please enter password greater than or equal to 6 characters",
+        },
+    },
+    submitHandler: function(form) {
+        form.submit();
+    }
+})
 
 
+$('#message').delay(3000).fadeOut();

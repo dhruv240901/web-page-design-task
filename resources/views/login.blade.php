@@ -3,7 +3,7 @@
 @section('content')
     <form class="col-md-4 border rounded pb-3" method="POST" action="{{route('custom-login')}}" id="loginform">
         @csrf
-        {{-- @include('components.flash') --}}
+        @include('components.flash')
 
         <h3 class="text-center">Login</h3>
         <div class="mb-3">
