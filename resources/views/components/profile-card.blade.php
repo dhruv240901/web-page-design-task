@@ -11,7 +11,7 @@
             Profile</span></li>
     <li class="list-group-item profile-card-item"><i class="fa-solid fa-gear"></i><span class="px-2">Account
             Settings</span></li>
-    <li class="list-group-item profile-card-item" id="login-btn"><i class="fa-solid fa-power-off"></i><span
+    <li class="list-group-item profile-card-item" id="logout-btn"><i class="fa-solid fa-power-off"></i><span
             class="px-2">Logout</span></li>
 </ul>
 

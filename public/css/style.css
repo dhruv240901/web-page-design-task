@@ -128,4 +128,11 @@ aside {
     margin-left: 20%;
 }
 
+.google-icon{
+    border-radius: 25px;
+}
 
+.contact-icon{
+    width: 25%;
+    height: 25%;
+}
