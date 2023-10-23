@@ -10,4 +10,5 @@ $(document).ready(function() {
     $('#profile-icon').click(function() {
         $('.profile-card').toggle()
     })
+
 })

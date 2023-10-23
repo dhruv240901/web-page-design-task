@@ -13,46 +13,21 @@
 
 <body>
     <div class="container-fluid g-0">
-       @include('components.navbar')
+        @include('components.navbar')
         <main>
-           @include('components.profile-card')
-            {{-- <aside>
-                <div class="side-nav-content">
-                    <ul class="nav-list">
-                        <li class="nav-list-item">
-                            <i class="fa-solid fa-house"></i>
-                            <span>
-                                <a href="#" class="sidenav-link">Dashboard</a>
-                            </span>
-                        </li>
-                        <li class="nav-list-item" id="msg-btn">
-                            <i class="fa-solid fa-message"></i>
-                            <span>
-                                <a href="#" class="sidenav-link">Messages</a>
-                            </span>
-                        </li>
-                        <li class="nav-list-item">
-                            <i class="fa-sharp fa-solid fa-envelope"></i>
-                            <span>
-                                <a href="#" class="sidenav-link">Mail</a>
-                            </span>
-                        </li>
-
-                    </ul>
-                </div>
-            </aside>
-            <div class="display-area p-3">
-                <p>Main Display Area</p>
-            </div> --}}
+            @include('components.profile-card')
+            @include('components.sidebar')
+            @yield('content')
         </main>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 </script>
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous"> -->
 <script src="https://kit.fontawesome.com/f42b8bcd38.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="{{asset('js/general.js')}}"></script>
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="{{ asset('js/general.js') }}"></script>
+
 </html>
