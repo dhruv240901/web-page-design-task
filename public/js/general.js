@@ -7,10 +7,7 @@ $(document).ready(function() {
     $('#msg-btn').click(function() {
         $('.message-list').slideToggle()
     })
-    $('#profile-icon').click(function() {
-        $('.profile-card').toggle()
-        $('.day-time').toggle()
-    })
+    
     let datetime = new Date();
     let hour = datetime.getHours() % 12 || 12;
     let minute = datetime.getMinutes();

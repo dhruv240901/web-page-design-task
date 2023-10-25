@@ -16,7 +16,6 @@
         @include('components.navbar')
         <main>
             @auth
-                @include('components.profile-card')
                 @include('components.sidebar')
             @endauth
             @yield('content')
