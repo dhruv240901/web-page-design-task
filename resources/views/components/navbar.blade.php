@@ -10,14 +10,14 @@
      <div class="navbar-collapse nav-items">
      </div>
      @auth
-         <ul class="navbar-nav me-auto" style="padding-right: 8%;">
+         <ul class="navbar-nav me-auto">
              <li class="nav-item">
                  <div class="p-2 me-3 dropdown">
                      <a class="dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
                          aria-expanded="false">
                          <i class="fa-solid fa-message"></i>
                      </a>
-                     <ul class="dropdown-menu" style="width: 250px">
+                     <ul class="dropdown-menu" style="width: 250px;left:-526%">
                          <li><a class="dropdown-item msg-card-item" href="#"><b>New Messages</b></a></li>
                          <li><a class="dropdown-item msg-card-item d-flex" href="#"><img
                                      src="{{ asset('images/profile-1.png') }}" class="contact-icon"><small
@@ -36,7 +36,7 @@
                          aria-expanded="false">
                          <i class="fa-solid fa-envelope"></i>
                      </a>
-                     <ul class="dropdown-menu" style="width: 250px">
+                     <ul class="dropdown-menu" style="width: 250px;left:-526%">
                          <li><a class="dropdown-item msg-card-item" href="#"><b>New Mails</b></a></li>
                          <li><a class="dropdown-item msg-card-item d-flex" href="#"><img
                                      src="https://ui-avatars.com/api/?name=Meet&size=41&background=4285F4&color=FFFFFF"
