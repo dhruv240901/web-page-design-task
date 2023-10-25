@@ -9,9 +9,15 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
+    @include('components.modal')
     <div class="container-fluid g-0">
         @include('components.navbar')
         <main>
@@ -29,6 +35,8 @@
 <script src="https://kit.fontawesome.com/f42b8bcd38.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 <script src="{{ asset('js/general.js') }}"></script>
 <script>
     $('#logout-btn').click(function() {
@@ -38,5 +46,7 @@
         }
     })
 </script>
-
+<script>
+@yield('jscontent')
+</script>
 </html>

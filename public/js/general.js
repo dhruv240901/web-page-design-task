@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#msg-btn').click(function() {
         $('.message-list').slideToggle()
     })
-    
+
     let datetime = new Date();
     let hour = datetime.getHours() % 12 || 12;
     let minute = datetime.getMinutes();
@@ -95,5 +95,43 @@ $('#loginform').validate({
     }
 })
 
-
+$('#adduserform').validate({
+    rules:{
+        firstname:{
+            required:true,
+        },
+        lastname:{
+            required:true,
+        },
+        email:{
+            required:true,
+            email:true
+        },
+        phone:{
+            required:true,
+            minlength:10,
+            maxlength:10
+        },
+    },
+    messages:{
+        firstname:{
+            required:"Please enter firstname",
+        },
+        lastname:{
+            required:"Please enter lastname",
+        },
+        email:{
+            required:"Please enter email",
+            email:"Please enter valid email"
+        },
+        phone:{
+            required:"Please enter phone number",
+            minlength:"Please enter valid phone number",
+            maxlength:"Please enter valid phone number"
+        },
+    },
+    submitHandler: function(form) {
+        form.submit();
+    }
+})
 

@@ -32,35 +32,47 @@
                 <table class="table table-striped" style="width: 75%;background-color: #e8e9df;border:2px solid">
                     <thead>
                         <tr>
+                            <td scope="col" colspan="6">
+                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addUserModal">
+                                    + Add User
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
                             <th scope="col">#</th>
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
                             <th scope="col">email</th>
                             <th scope="col">Phone number</th>
+                            <th scope="col">Action</th>
+
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Dhruv</td>
-                            <td>Patel</td>
-                            <td>dhruv@gmail.com</td>
-                            <td>4545454545</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Shubham</td>
-                            <td>Patel</td>
-                            <td>subham@gmail.com</td>
-                            <td>3636363636</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Yash</td>
-                            <td>Prajapati</td>
-                            <td>yash@gmail.com</td>
-                            <td>8888888888</td>
-                        </tr>
+                    <tbody id="userdata">
+                        @foreach ($otheruser as $k => $value)
+                            <tr>
+                                <th scope="row">{{ $k + 1 }}</th>
+                                <td>{{ $value->firstname }}</td>
+                                <td>{{ $value->lastname }}</td>
+                                <td>{{ $value->email }}</td>
+                                <td>{{ $value->phone }}</td>
+                                <td>
+                                    <a href="javascript:void(0);" type="button" onclick="openeditmodal('{{$value->id}}','{{$value->firstname}}','{{$value->lastname}}','{{$value->email}}','{{$value->phone}}')" class="btn btn-success" style="background-color:#1bcf1b">
+                                        <img src="{{ asset('images/edit.svg') }}" alt="">
+                                    </a>
+
+                                    <form action="#"
+                                        onsubmit="return confirm('Are you sure you want to delete this account?')"
+                                        style="display: inline">
+                                        <button type="submit" class="btn" style="background-color:red">
+                                            <img src="{{ asset('images/delete.svg') }}" alt="">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>
@@ -75,4 +87,31 @@
             </div>
         @endguest
     </div>
+@endsection
+@section('jscontent')
+    $(document).ready(function (){
+        $("#adduserbtn").click(function () {
+            $.ajax({
+                method: "POST",
+                url: "{{ route('store-user') }}",
+                data: $("#adduserform").serialize(),
+                dataType: "html",
+                success:function(data){
+                    $('#userdata').append(data);
+                    $('#addUserModal').modal('hide');
+                    $('#addUserModal').remove();
+                }
+            })
+        });
+
+    });
+    {{-- function openeditmodal(id,firstname,lastname,email,phone)
+        {
+            $('#editUserModal').modal('show');
+            $('#user_id').val(id);
+            $('#oldfirstname').val(firstname);
+            $('#oldlastname').val(lastname);
+            $('#oldEmail').val(email);
+            $('#oldPhone').val(phone);
+        } --}}
 @endsection

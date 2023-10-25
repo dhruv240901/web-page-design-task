@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +16,12 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/', [HomeController::class,'index'])->name('index');
+Route::get('/', [UserController::class,'index'])->name('index');
 Route::get('signup', [AuthController::class,'signup'])->name('signup');
 Route::post('signup', [AuthController::class,'CustomSignup'])->name('custom-signup');
 Route::get('login',[AuthController::class,'login'])->name('login');
 Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login');
 Route::get('logout', [AuthController::class,'logout'])->name('logout');
+
+Route::post('store-user',[UserController::class,'store'])->name('store-user');
+// Route::post('update-user',[UserController::class,'update'])->name('update-user');
