@@ -108,6 +108,10 @@ aside {
     text-transform: capitalize;
 }
 
+.dropdown-toggle::after {
+    display: none;
+}
+
 .sidenav-link {
     text-decoration: none;
     color: white;
