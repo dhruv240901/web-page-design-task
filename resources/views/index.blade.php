@@ -33,8 +33,7 @@
                     <thead>
                         <tr>
                             <td scope="col" colspan="6">
-                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#addUserModal">
+                                <a href="javascript:void(0);" type="button" class="btn btn-primary" onclick="openaddmodal()">
                                     + Add User
                                 </a>
                             </td>
@@ -51,7 +50,8 @@
                     </thead>
                     <tbody id="userdata">
                         @foreach ($otheruser as $k => $value)
-                            <tr>
+                            <tr id="user{{$value->id}}">
+                                <input type="hidden" value="{{$value->id}}" id="user_id" name="user_id">
                                 <th scope="row">{{ $k + 1 }}</th>
                                 <td>{{ $value->firstname }}</td>
                                 <td>{{ $value->lastname }}</td>
@@ -98,20 +98,35 @@
                 dataType: "html",
                 success:function(data){
                     $('#userdata').append(data);
-                    $('#addUserModal').modal('hide');
-                    $('#addUserModal').remove();
+                    $('#adduserform')[0].reset();
+                }
+            })
+        });
+        $("#edituserbtn").click(function () {
+            $.ajax({
+                method: "POST",
+                url: "{{ route('update-user') }}",
+                data: $("#edituserform").serialize(),
+                dataType: "html",
+                success:function(data){
+                    $('#userdata').html(data)
                 }
             })
         });
 
     });
-    {{-- function openeditmodal(id,firstname,lastname,email,phone)
-        {
-            $('#editUserModal').modal('show');
-            $('#user_id').val(id);
-            $('#oldfirstname').val(firstname);
-            $('#oldlastname').val(lastname);
-            $('#oldEmail').val(email);
-            $('#oldPhone').val(phone);
-        } --}}
+    function openaddmodal()
+    {
+        $('#addUserModal').modal('show');
+    }
+    function openeditmodal(id,firstname,lastname,email,phone)
+    {
+        $('#editUserModal').modal('show');
+        $('#user_id').val(id);
+        $('#oldfirstname').val(firstname);
+        $('#oldlastname').val(lastname);
+        $('#oldEmail').val(email);
+        $('#oldPhone').val(phone);
+    }
+
 @endsection

@@ -28,13 +28,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="adduserbtn" class="btn btn-primary">Submit</button>
+                <button type="button" id="adduserbtn" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-{{-- <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -44,7 +44,7 @@
             <div class="modal-body">
                 <form id="edituserform" method="POST">
                     @csrf
-                    <input type="hidden" value="" id="user_id">
+                    <input type="hidden" value="" id="user_id" name="user_id">
                     <div class="mb-3">
                         <label for="exampleInputfirstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="oldfirstname" aria-describedby="emailHelp" name="firstname">
@@ -65,9 +65,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="adduserbtn" class="btn btn-primary">Update</button>
+                <button type="button" id="edituserbtn" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 

@@ -24,4 +24,4 @@ Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login'
 Route::get('logout', [AuthController::class,'logout'])->name('logout');
 
 Route::post('store-user',[UserController::class,'store'])->name('store-user');
-// Route::post('update-user',[UserController::class,'update'])->name('update-user');
+Route::post('update-user',[UserController::class,'update'])->name('update-user');

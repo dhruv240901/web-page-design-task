@@ -66,7 +66,23 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'user_id'=>'required',
+            'firstname'=>'required',
+            'lastname'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required|min:10|max:10'
+        ]);
+        $user=OtherUser::findOrFail($request->user_id);
+        $updatedata=[
+            'firstname'=>$request->firstname,
+            'lastname'=>$request->lastname,
+            'email'=>$request->email,
+            'phone'=>$request->phone
+        ];
+        $user->update($updatedata);
+        $otheruser=OtherUser::get();
+        return view('edituserdata',compact('otheruser'));
     }
 
     /**
