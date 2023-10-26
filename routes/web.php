@@ -25,3 +25,4 @@ Route::get('logout', [AuthController::class,'logout'])->name('logout');
 
 Route::post('store-user',[UserController::class,'store'])->name('store-user');
 Route::post('update-user',[UserController::class,'update'])->name('update-user');
+Route::post('delete-user',[UserController::class,'destroy'])->name('delete-user');

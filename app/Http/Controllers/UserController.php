@@ -6,26 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\OtherUser;
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $otheruser=OtherUser::get();
-        return view('index',compact('otheruser'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // function to store new user
     public function store(Request $request)
     {
         $request->validate([
@@ -41,29 +22,12 @@ class UserController extends Controller
             'email'=>$request->email,
             'phone'=>$request->phone
         ];
-        $otheruser=OtherUser::create($insertdata);
-        return view('addednewuser',compact('otheruser'));
+        OtherUser::create($insertdata);
+        $otheruser=OtherUser::get();
+        return view('userlist',compact('otheruser'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // function to update user
     public function update(Request $request)
     {
         $request->validate([
@@ -82,14 +46,14 @@ class UserController extends Controller
         ];
         $user->update($updatedata);
         $otheruser=OtherUser::get();
-        return view('edituserdata',compact('otheruser'));
+        return view('userlist',compact('otheruser'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // function to delete user
+    public function destroy(Request $request)
     {
-        //
+        $deleteuser=OtherUser::findOrFail($request->user_id)->delete();
+        $otheruser=OtherUser::get();
+        return view('userlist',compact('otheruser'));
     }
 }
