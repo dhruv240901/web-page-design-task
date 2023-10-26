@@ -11,24 +11,28 @@
                     <div class="mb-3">
                         <label for="exampleInputfirstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+                        <label id="exampleInputfirstname-error" class="error" for="exampleInputfirstname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputlastname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+                        <label id="exampleInputlastname-error" class="error" for="exampleInputlastname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" name="email">
+                        <label id="exampleInputEmail-error" class="error" for="exampleInputEmail"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPhone" class="form-label">Phone number</label>
                         <input type="text" class="form-control" id="Phone" aria-describedby="emailHelp" name="phone">
+                        <label id="exampleInputPhone-error" class="error" for="exampleInputPhone"></label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="adduserbtn" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                <button type="button" id="adduserbtn" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
@@ -48,24 +52,28 @@
                     <div class="mb-3">
                         <label for="exampleInputfirstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="oldfirstname" aria-describedby="emailHelp" name="firstname">
+                        <label id="exampleInputfirstname-error" class="error" for="exampleInputfirstname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputlastname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="oldlastname" aria-describedby="emailHelp" name="lastname">
+                        <label id="exampleInputlastname-error" class="error" for="exampleInputlastname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="oldEmail" aria-describedby="emailHelp" name="email">
+                        <label id="exampleInputEmail-error" class="error" for="exampleInputEmail"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPhone" class="form-label">Phone number</label>
                         <input type="text" class="form-control" id="oldPhone" aria-describedby="emailHelp" name="phone">
+                        <label id="exampleInputPhone-error" class="error" for="exampleInputPhone"></label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" id="edituserbtn" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                <button type="button" id="edituserbtn" class="btn btn-primary">Update</button>
             </div>
         </div>
     </div>

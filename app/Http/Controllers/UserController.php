@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OtherUser;
+use Session;
 class UserController extends Controller
 {
     // function to store new user
@@ -24,6 +25,7 @@ class UserController extends Controller
         ];
         OtherUser::create($insertdata);
         $otheruser=OtherUser::get();
+        session()->flash('message', 'User Added Successfully!');
         return view('userlist',compact('otheruser'));
     }
 
@@ -46,6 +48,7 @@ class UserController extends Controller
         ];
         $user->update($updatedata);
         $otheruser=OtherUser::get();
+        session()->flash('message', 'User Updated Successfully!');
         return view('userlist',compact('otheruser'));
     }
 
@@ -54,6 +57,7 @@ class UserController extends Controller
     {
         $deleteuser=OtherUser::findOrFail($request->user_id)->delete();
         $otheruser=OtherUser::get();
+        session()->flash('message', 'User Deleted Successfully!');
         return view('userlist',compact('otheruser'));
     }
 }
