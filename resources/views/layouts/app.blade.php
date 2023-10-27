@@ -52,9 +52,6 @@ integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="ano
 </script>
 <script>
     @yield('jscontent')
-    // @if ($message = Session::get('success'))
-    // toastr.success({{$message}})
-    // @endif
 </script>
 
 </html>

@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody id="userdata">
-                       {{-- @include('userlist') --}}
+                       @include('userlist')
                     </tbody>
                 </table>
             </div>
@@ -66,7 +66,27 @@
     </div>
 @endsection
 @section('jscontent')
+function openaddmodal()
+{
+    $('#addUserModal').modal('show');
+}
+function openeditmodal(id,firstname,lastname,email,phone)
+{
+    $('#editUserModal').modal('show');
+    $('#user_id').val(id);
+    $('#oldfirstname').val(firstname);
+    $('#oldlastname').val(lastname);
+    $('#oldEmail').val(email);
+    $('#oldPhone').val(phone);
+}
+
+function opendeletemodal(id)
+{
+    $('#deleteUserModal').modal('show');
+    $('#userid').val(id);
+}
     $(document).ready(function (){
+
         $("#exampleInputfirstname-error").hide();
         let firstnameError = true;
         $("#firstname").keyup(function () {
@@ -203,18 +223,124 @@
             }
         });
 
+        $("#exampleOldInputfirstnameError").hide();
+        let oldfirstnameError = true;
+        $("#oldfirstname").keyup(function () {
+            validateOldFirstname();
+        });
+
+        function validateOldFirstname() {
+            let oldfirstnameValue = $("#oldfirstname").val();
+            if (oldfirstnameValue.length == "") {
+                $("#exampleOldInputfirstnameError").show();
+                $("#exampleOldInputfirstnameError").html("Please enter firstname");
+                oldfirstnameError = false;
+                return false;
+            } else {
+                $("#exampleOldInputfirstnameError").hide();
+                oldfirstnameError = true;
+            }
+        }
+
+
+        $("#exampleOldInputlastnameError").hide();
+        let oldlastnameError = true;
+        $("#oldlastname").keyup(function () {
+            validateOldLastname();
+        });
+
+        function validateOldLastname() {
+            let oldlastnameValue = $("#oldlastname").val();
+            if (oldlastnameValue.length == "") {
+                $("#exampleOldInputlastnameError").show();
+                $("#exampleOldInputlastnameError").html("Please enter lastname");
+                oldlastnameError = false;
+                return false;
+            } else {
+                $("#exampleOldInputlastnameError").hide();
+                oldlastnameError = true;
+            }
+        }
+
+        $("#exampleOldInputEmailError").hide();
+        let oldemailError = true;
+        $("#oldEmail").keyup(function () {
+            validateOldEmail();
+
+        });
+
+        function validateOldEmail() {
+            let oldemailValue = $("#oldEmail").val();
+            let regex =
+                /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+            if (oldemailValue.length == "") {
+                $("#exampleOldInputEmailError").show();
+                $("#exampleOldInputEmailError").html("Please enter email");
+                oldemailError = false;
+                return false;
+            } else if (!regex.test(oldemailValue)) {
+                $("#exampleOldInputEmailError").show();
+                $("#exampleOldInputEmailError").html("Please enter valid email");
+                oldemailError = false;
+            } else {
+                $("#exampleOldInputEmailError").hide();
+                oldemailError=true;
+
+            }
+
+        }
+
+
+        $("#exampleOldInputPhoneError").hide();
+        let oldphoneError = true;
+        $("#oldPhone").keyup(function () {
+            validateOldPhone();
+        });
+
+        function validateOldPhone() {
+            let oldphoneValue = $("#oldPhone").val();
+            if (oldphoneValue.length == "") {
+                $("#exampleOldInputPhoneError").show();
+                $("#exampleOldInputPhoneError").html("Please enter phone number");
+                oldphoneError = false;
+                return false;
+            }else if(oldphoneValue.length != 10){
+                $("#exampleOldInputPhoneError").show();
+                $("#exampleOldInputPhoneError").html("Please enter valid phone number");
+                oldphoneError = false;
+                return false;
+            }
+            else {
+                $("#exampleOldInputPhoneError").hide();
+                oldphoneError = true;
+            }
+        }
+
         $("#edituserbtn").click(function () {
-            $.ajax({
-                method: "POST",
-                url: "{{ route('update-user') }}",
-                data: $("#edituserform").serialize(),
-                dataType: "html",
-                success:function(data){
-                    $("#editUserModal").modal("toggle");
-                    $('#userdata').html(data)
-                    toastr.success("{{Session::get('message')}}")
-                }
-            })
+            validateOldFirstname();
+            validateOldLastname();
+            validateOldEmail();
+            validateOldPhone();
+            if (
+                oldfirstnameError == true &&
+                oldlastnameError == true &&
+                oldemailError==true &&
+                oldphoneError==true
+            ){
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('update-user') }}",
+                    data: $("#edituserform").serialize(),
+                    dataType: "html",
+                    success:function(data){
+                        $("#editUserModal").modal("toggle");
+                        $('#userdata').html(data)
+                    }
+                })
+                return true
+            }else{
+                return false
+            }
         });
 
         $("#deleteuserbtn").click(function () {
@@ -230,23 +356,5 @@
             })
         });
     });
-    function openaddmodal()
-    {
-        $('#addUserModal').modal('show');
-    }
-    function openeditmodal(id,firstname,lastname,email,phone)
-    {
-        $('#editUserModal').modal('show');
-        $('#user_id').val(id);
-        $('#oldfirstname').val(firstname);
-        $('#oldlastname').val(lastname);
-        $('#oldEmail').val(email);
-        $('#oldPhone').val(phone);
-    }
 
-    function opendeletemodal(id)
-    {
-        $('#deleteUserModal').modal('show');
-        $('#userid').val(id);
-    }
 @endsection

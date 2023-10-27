@@ -52,22 +52,22 @@
                     <div class="mb-3">
                         <label for="exampleInputfirstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="oldfirstname" aria-describedby="emailHelp" name="firstname">
-                        <label id="exampleInputfirstname-error" class="error" for="exampleInputfirstname"></label>
+                        <label id="exampleOldInputfirstnameError" class="error" for="exampleInputfirstname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputlastname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="oldlastname" aria-describedby="emailHelp" name="lastname">
-                        <label id="exampleInputlastname-error" class="error" for="exampleInputlastname"></label>
+                        <label id="exampleOldInputlastnameError" class="error" for="exampleInputlastname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="oldEmail" aria-describedby="emailHelp" name="email">
-                        <label id="exampleInputEmail-error" class="error" for="exampleInputEmail"></label>
+                        <label id="exampleOldInputEmailError" class="error" for="exampleInputEmail"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPhone" class="form-label">Phone number</label>
                         <input type="text" class="form-control" id="oldPhone" aria-describedby="emailHelp" name="phone">
-                        <label id="exampleInputPhone-error" class="error" for="exampleInputPhone"></label>
+                        <label id="exampleOldInputPhoneError" class="error" for="exampleInputPhone"></label>
                     </div>
                 </form>
             </div>
