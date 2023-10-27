@@ -57,7 +57,7 @@ aside {
     position: absolute;
     left: 0rem;
     width: 250px;
-    height: 100vh;
+    height: 150vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     background-color: rgb(183 200 27);
     white-space: nowrap;
@@ -140,4 +140,9 @@ aside {
 .contact-icon{
     width: 25%;
     height: 25%;
+}
+
+#user_table_wrapper{
+    width: 65%;
+    background: #e7e1e1;
 }

@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="d-flex mt-5" style="justify-content: center">
-                <table class="table table-striped" style="width: 75%;background-color: #e8e9df;border:2px solid">
+                <table class="table table-striped" id="user_table" style="width: 75%;background-color: #e8e9df;border:2px solid">
                     <thead>
                         <tr>
                             <td scope="col" colspan="6">
@@ -86,6 +86,7 @@ function opendeletemodal(id)
     $('#userid').val(id);
 }
     $(document).ready(function (){
+        $('#user_table').DataTable();
 
         $("#exampleInputfirstname-error").hide();
         let firstnameError = true;
@@ -214,6 +215,7 @@ function opendeletemodal(id)
                         $("#addUserModal").modal("toggle");
                         $('#userdata').html(data)
                         $('#adduserform')[0].reset();
+                        $('#user_table').DataTable().draw();
                         {{-- // toastr.success("{{Session::get('message')}}") --}}
                     }
                 })
@@ -334,6 +336,7 @@ function opendeletemodal(id)
                     dataType: "html",
                     success:function(data){
                         $("#editUserModal").modal("toggle");
+                        $('#user_table').DataTable().draw();
                         $('#userdata').html(data)
                     }
                 })
@@ -350,8 +353,8 @@ function opendeletemodal(id)
                 data: $("#deleteuserform").serialize(),
                 dataType: "html",
                 success:function(data){
+                    $('#user_table').DataTable().draw();
                     $('#userdata').html(data)
-                    toastr.success("{{Session::get('message')}}")
                 }
             })
         });
