@@ -73,4 +73,15 @@ class AuthController extends Controller
        auth()->logout();
        return redirect()->route('index')->with('success','Logout Successfully!');
     }
+
+    // function to check email is unique or not
+    public function CheckEmailUnique(Request $request)
+    {
+        $user=User::where('email',$request->email)->first();
+        if($user){
+            return 'false';
+        }else{
+            return 'true';
+        }
+    }
 }

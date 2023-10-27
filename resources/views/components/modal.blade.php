@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <form id="adduserform" method="POST">
-                    @csrf
+                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                     <div class="mb-3">
                         <label for="exampleInputfirstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">

@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody id="userdata">
-                       @include('userlist')
+                       {{-- @include('userlist') --}}
                     </tbody>
                 </table>
             </div>
@@ -110,6 +110,7 @@
         let emailError = true;
         $("#Email").keyup(function () {
             validateEmail();
+
         });
 
         function validateEmail() {
@@ -126,9 +127,25 @@
                 $("#exampleInputEmail-error").html("Please enter valid email");
                 emailError = false;
             } else {
-                $("#exampleInputEmail-error").hide();
-                emailError=true;
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('check_email_unique')}}',
+                    data: { _token:$('#csrf-token').val(),
+                            email: $("#Email").val()
+                    },
+                    success: function (response) {
+                        if (response=='false') {
+                            $("#exampleInputEmail-error").show();
+                            $("#exampleInputEmail-error").html("Email Id already exist");
+                            emailError = false;
+                        } else {
+                            $("#exampleInputEmail-error").hide();
+                            emailError=true;
+                        }
+                    }
+                });
             }
+
         }
 
 

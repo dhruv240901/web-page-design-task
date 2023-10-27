@@ -1,4 +1,4 @@
-@foreach ($otheruser as $k => $value)
+@foreach ($users as $k => $value)
 <tr id="user{{$value->id}}">
     <input type="hidden" value="{{$value->id}}" id="user_id" name="user_id">
     <th scope="row">{{ $k + 1 }}</th>

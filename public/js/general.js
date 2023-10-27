@@ -159,6 +159,16 @@ $("#signupform").validate({
         email: {
             required: true,
             email: true,
+            remote: {
+                url: "/checkemailunique",
+                type: "post",
+                data: {
+                    email: function() {
+                    return $( "#email" ).val();
+                    },
+                    '_token':$("#csrf-token").val(),
+                }
+            }
         },
         phone:{
             required: true,
@@ -182,6 +192,7 @@ $("#signupform").validate({
         email: {
             required: "Please enter your email",
             email: "Please enter valid email",
+            remote:"Email Id already exists"
         },
         phone:{
             required: "Please enter your phone number",

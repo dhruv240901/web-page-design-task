@@ -2,7 +2,7 @@
 @section('title', 'Signup')
 @section('content')
     <form class="col-md-4 border rounded pb-3" action="{{ route('custom-signup') }}" method="POST" id="signupform">
-        @csrf
+        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
         @include('components.flash')
         <h3 class="text-center">Sign Up</h3>
         <div class="mb-3">
