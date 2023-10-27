@@ -66,10 +66,9 @@ class UserController extends Controller
     // function to delete user
     public function destroy(Request $request)
     {
-        // $deleteuser=OtherUser::findOrFail($request->user_id)->delete();
-        // $otheruser=OtherUser::get();
-        // session()->flash('message', 'User Deleted Successfully!');
-        // return view('userlist',compact('otheruser'));
+        $deleteuser=User::findOrFail($request->user_id)->delete();
+        $users=User::where('owner_id',auth()->id())->get();
+        return view('userlist',compact('users'));
     }
 
 }
