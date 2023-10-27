@@ -20,9 +20,12 @@ class AuthController extends Controller
     // function to create user account
     public function CustomSignup(Request $request){
        $validator=$request->validate([
-            'name'=>'required',
+            'firstname'=>'required',
+            'lastname'=>'required',
             'email'=>'required|email',
-            'password'=>'required|min:6'
+            'phone'=>'required|min:10|max:10',
+            'password'=>'required|min:6',
+            'confirmpassword'=>'required|min:6|same:password'
        ]);
 
        $checkemailunique=User::where('email',$request->email)->first();
@@ -32,8 +35,10 @@ class AuthController extends Controller
        }
        else{
             $insertdata=[
-                    'name'=>$request->name,
+                    'firstname'=>$request->firstname,
+                    'lastname'=>$request->lastname,
                     'email'=>$request->email,
+                    'phone'=>$request->phone,
                     'password'=>Hash::make($request->password),
             ];
             User::create($insertdata);

@@ -8,7 +8,6 @@ class HomeController extends Controller
 {
     // function to render home page
     public function index(){
-        $otheruser=OtherUser::get();
-        return view('index',compact('otheruser'));
+        return view('index');
     }
 }

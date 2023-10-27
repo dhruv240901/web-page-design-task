@@ -147,30 +147,56 @@ $(document).ready(function () {
 
 });
 
+// Validate Signup Form
 $("#signupform").validate({
     rules: {
-        name: {
+        firstname: {
+            required: true,
+        },
+        lastname: {
             required: true,
         },
         email: {
             required: true,
             email: true,
         },
+        phone:{
+            required: true,
+            number: true,
+            minlength:10,
+            maxlength:10
+        },
         password: {
             required: true,
             minlength: 6,
         },
+        confirmpassword:{
+            required:true,
+            minlength: 6,
+            equalTo: "#password"
+        }
     },
     messages: {
-        name: "Please enter your name",
+        firstname: "Please enter your firstname",
+        lastname:"Please enter your lastname",
         email: {
             required: "Please enter your email",
             email: "Please enter valid email",
         },
+        phone:{
+            required: "Please enter your phone number",
+            number: "Please enter valid phone number",
+            minlength:"Please enter valid phone number",
+            maxlength:"Please enter valid phone number"
+        },
         password: {
             required: "Please enter password",
-            minlength:
-                "Please enter password greater than or equal to 6 characters",
+            minlength:"Please enter password greater than or equal to 6 characters",
+        },
+        confirmpassword: {
+            required: "Please enter password",
+            minlength:"Please enter password greater than or equal to 6 characters",
+            equalTo:"Please enter the same password as above"
         },
     },
     submitHandler: function (form) {
@@ -178,6 +204,7 @@ $("#signupform").validate({
     },
 });
 
+// Validate Login Form
 $("#loginform").validate({
     rules: {
         email: {
