@@ -8,6 +8,7 @@ $(document).ready(function () {
         $(".message-list").slideToggle();
     });
 
+    $('#user_table').DataTable();
     let datetime = new Date();
     let hour = datetime.getHours() % 12 || 12;
     let minute = datetime.getMinutes();

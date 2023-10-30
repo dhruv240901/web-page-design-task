@@ -85,8 +85,7 @@ function opendeletemodal(id)
     $('#deleteUserModal').modal('show');
     $('#userid').val(id);
 }
-    $(document).ready(function (){
-        $('#user_table').DataTable();
+$(document).ready(function (){
 
         $("#exampleInputfirstname-error").hide();
         let firstnameError = true;
@@ -210,13 +209,15 @@ function opendeletemodal(id)
                     method: "POST",
                     url: "{{ route('store-user') }}",
                     data: $("#adduserform").serialize(),
-                    dataType: "html",
-                    success:function(data){
-                        $("#addUserModal").modal("toggle");
-                        $('#userdata').html(data)
-                        $('#adduserform')[0].reset();
-                        $('#user_table').DataTable().draw();
-                        {{-- // toastr.success("{{Session::get('message')}}") --}}
+                    dataType: "json",
+                    success:function(response){
+                        if(response['status']=='success'){
+                            $("#addUserModal").modal("toggle");
+                            $('#user_table').DataTable();
+                            $('#userdata').html(response.data)
+                            $('#adduserform')[0].reset();
+                            toastr.success(''+response.message+'')
+                        }
                     }
                 })
                 return true
@@ -333,11 +334,16 @@ function opendeletemodal(id)
                     method: "POST",
                     url: "{{ route('update-user') }}",
                     data: $("#edituserform").serialize(),
-                    dataType: "html",
-                    success:function(data){
-                        $("#editUserModal").modal("toggle");
-                        $('#user_table').DataTable().draw();
-                        $('#userdata').html(data)
+                    dataType: "json",
+                    success:function(response){
+                        console.log(response)
+                        if(response['status']=='success')
+                        {
+                            $("#editUserModal").modal("toggle");
+                            $('#user_table').DataTable().draw();
+                            $('#userdata').html(response.data);
+                            toastr.success(''+response.message+'')
+                        }
                     }
                 })
                 return true
@@ -351,10 +357,14 @@ function opendeletemodal(id)
                 method: "POST",
                 url: "{{ route('delete-user') }}",
                 data: $("#deleteuserform").serialize(),
-                dataType: "html",
-                success:function(data){
-                    $('#user_table').DataTable().draw();
-                    $('#userdata').html(data)
+                dataType: "json",
+                success:function(response){
+                    if(response['status']=='success')
+                    {
+                        $('#user_table').DataTable().draw();
+                        $('#userdata').html(response.data);
+                        toastr.success(''+response.message+'')
+                    }
                 }
             })
         });

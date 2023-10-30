@@ -26,6 +26,7 @@ Route::get('reset-password', [AuthController::class,'logout'])->name('reset-pass
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('logout', [AuthController::class,'logout'])->name('logout');
+    Route::get('list',[UserController::class,'UserList'])->name('user-list');
     Route::post('store-user',[UserController::class,'store'])->name('store-user');
     Route::post('update-user',[UserController::class,'update'])->name('update-user');
     Route::post('delete-user',[UserController::class,'destroy'])->name('delete-user');
