@@ -89,11 +89,13 @@ class AuthController extends Controller
         }
     }
 
+    // function to render reset password form
     public function ViewResetPassword()
     {
         return view('resetpassword');
     }
 
+    // function to perform reset password 
     public function ResetPassword(Request $request)
     {
         $user=User::where('email',$request->email)->first();
