@@ -1,13 +1,13 @@
 @extends('layouts.auth')
 @section('title','Reset Password')
 @section('content')
-    <form class="col-md-4 border rounded pb-3" method="POST" action="{{route('custom-login')}}" id="loginform">
+    <form class="col-md-4 border rounded pb-3" method="POST" action="{{route('reset-password')}}" id="resetpasswordform">
         @csrf
         @include('components.flash')
         <h3 class="text-center">Reset Password</h3>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{Session::get('email')}}" readonly>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>

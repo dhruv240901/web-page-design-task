@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Hash;
 use App\Models\User;
-
+use Session;
 class AuthController extends Controller
 {
      // function to render signup form
@@ -63,6 +63,10 @@ class AuthController extends Controller
 
        $credentials=$request->only('email','password');
        if(Auth::attempt($credentials)){
+            if(auth()->user()->is_firsttime_login=='1'){
+                Session::put('email',auth()->user()->email);
+                return redirect()->route('view-reset-password')->with('success','Please reset you password!');
+            }
             return redirect()->route('index')->with('success','Logged In successfully!');
        }
        return redirect()->route('login')->with('error','Invalid Credentials!');
@@ -83,5 +87,18 @@ class AuthController extends Controller
         }else{
             return 'true';
         }
+    }
+
+    public function ViewResetPassword()
+    {
+        return view('resetpassword');
+    }
+
+    public function ResetPassword(Request $request)
+    {
+        $user=User::where('email',$request->email)->first();
+        $user->update(['password'=>Hash::make($request->password),'is_firsttime_login'=>'0']);
+        Session::flush();
+        return redirect()->route('login')->with('success','Password Reset Successfully Please login!');
     }
 }

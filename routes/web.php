@@ -22,7 +22,8 @@ Route::post('signup', [AuthController::class,'CustomSignup'])->name('custom-sign
 Route::post('checkemailunique', [AuthController::class,'CheckEmailUnique'])->name('check_email_unique');
 Route::get('login',[AuthController::class,'login'])->name('login');
 Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login');
-Route::get('reset-password', [AuthController::class,'logout'])->name('reset-password');
+Route::get('resetpassword', [AuthController::class,'ViewResetPassword'])->name('view-reset-password');
+Route::post('resetpassword', [AuthController::class,'ResetPassword'])->name('reset-password');
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('logout', [AuthController::class,'logout'])->name('logout');
