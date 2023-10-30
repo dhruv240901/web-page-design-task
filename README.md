@@ -12,8 +12,7 @@ Before you begin, ensure you have met the following requirements:
 
 ## Getting Started
 
-1. Clone this repository to your local machine (In windows go to the xampp/htdocs  
-   folder):
+1. Clone this repository to your local machine (In windows go to the xampp/htdocs folder):
 
    ```bash
    git clone https://github.com/dhruv240901/web-page-design-task
