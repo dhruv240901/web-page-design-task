@@ -1,6 +1,6 @@
 # Rendering sidebar elements and User CRUD Operation using AJAX in Laravel
 
-This repository contains a Laravel application that demonstrates how to render sidebar elements of homepage using service provider perform CRUD operations for users using AJAX (Asynchronous JavaScript and XML). This is a step-by-step guide to help you understand and implement user management functionalities with real-time updates.
+This repository contains a Laravel application that demonstrates how to render sidebar elements of homepage using service provider and perform CRUD operations for users using AJAX (Asynchronous JavaScript and XML). This is a step-by-step guide to help you understand and implement user management functionalities with real-time updates.
 
 ## Prerequisites
 
