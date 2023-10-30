@@ -19,22 +19,34 @@ Before you begin, ensure you have met the following requirements:
    git clone https://github.com/dhruv240901/web-page-design-task
 
 2. Change to the project directory:
+
+    ```bash
    cd user-crud-laravel-ajax
 
 3. Install Laravel dependencies:
+
+   ```bash
    composer update
 
 4. Create a .env file by copying the .env.example file and configure your database
    and mail settings:
+
+   ```bash
    cp .env.example .env
 
 5. Generate an application key:
+
+   ```bash
    php artisan key:generate
 
 6. Migrate and seed the database:
+
+   ```bash
    php artisan migrate --seed
 
 7. Start the Laravel development server:
+
+   ```bash
    php artisan serve
 
 8. Access the application in your web browser at http://localhost:8000.
