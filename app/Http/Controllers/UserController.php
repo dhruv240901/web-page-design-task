@@ -8,6 +8,7 @@ use Mail;
 use App\Mail\AddUserMail;
 use Hash;
 use Session;
+
 class UserController extends Controller
 {
     // function to store new user
@@ -32,12 +33,13 @@ class UserController extends Controller
         ];
 
         $userdata=User::create($insertdata);
-        // dispatch(function() use($userdata,$randompassword){
-        //     Mail::to($userdata->email)->send(new AddUserMail($userdata,$randompassword));
-        // });
-        Mail::to($userdata->email)->send(new AddUserMail($userdata,$randompassword));
+
+        dispatch(function() use ($userdata, $randompassword){
+            Mail::to($userdata->email)->send(new AddUserMail($userdata,$randompassword));
+        });
+
         if($userdata){
-            $users=User::where('owner_id',auth()->id())->get();
+            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
             $userlist='';
             foreach($users as $k=>$value){
                 $userlist.='<tr id="user'.$value->id.'">
@@ -47,14 +49,16 @@ class UserController extends Controller
                 <td>'. $value->lastname .'</td>
                 <td>'. $value->email .'</td>
                 <td>'. $value->phone .'</td>
-                <td>
-                    <a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.',"'.$value->phone.'")" class="btn btn-success">
+                <td>';
+                if($value->owner_id==auth()->id()){
+                    $userlist.='<a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.','.$value->phone.'.toString())" class="btn btn-success">
                         <img src="'. asset('images/edit.svg') .'" alt="">
                     </a>
                     <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
                         <img src="'. asset('images/delete.svg') .'" alt="">
-                    </a>
-                </td>
+                    </a>';
+                }
+                $userlist.='</td>
             </tr>';
             }
 
@@ -90,7 +94,7 @@ class UserController extends Controller
         ];
         $updateuser=$user->update($updatedata);
         if($updateuser){
-            $users=User::where('owner_id',auth()->id())->get();
+            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
             $userlist='';
             foreach($users as $k=>$value){
                 $userlist.='<tr id="user'.$value->id.'">
@@ -100,14 +104,16 @@ class UserController extends Controller
                 <td>'. $value->lastname .'</td>
                 <td>'. $value->email .'</td>
                 <td>'. $value->phone .'</td>
-                <td>
-                    <a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.',"'.$value->phone.'")" class="btn btn-success">
+                <td>';
+                if($value->owner_id==auth()->id()){
+                    $userlist.='<a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.','.$value->phone.')" class="btn btn-success">
                         <img src="'. asset('images/edit.svg') .'" alt="">
                     </a>
                     <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
                         <img src="'. asset('images/delete.svg') .'" alt="">
-                    </a>
-                </td>
+                    </a>';
+                }
+                $userlist.='</td>
             </tr>';
             }
 
@@ -130,7 +136,7 @@ class UserController extends Controller
     {
         $deleteuser=User::findOrFail($request->user_id)->delete();
         if($deleteuser){
-            $users=User::where('owner_id',auth()->id())->get();
+            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
             $userlist='';
             foreach($users as $k=>$value){
                 $userlist.='<tr id="user'.$value->id.'">
@@ -140,14 +146,16 @@ class UserController extends Controller
                 <td>'. $value->lastname .'</td>
                 <td>'. $value->email .'</td>
                 <td>'. $value->phone .'</td>
-                <td>
-                    <a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.',"'.$value->phone.'")" class="btn btn-success">
+                <td>';
+                if($value->owner_id==auth()->id()){
+                    $userlist.='<a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.','.$value->phone.')" class="btn btn-success">
                         <img src="'. asset('images/edit.svg') .'" alt="">
                     </a>
                     <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
                         <img src="'. asset('images/delete.svg') .'" alt="">
-                    </a>
-                </td>
+                    </a>';
+                }
+                $userlist.='</td>
             </tr>';
             }
 
