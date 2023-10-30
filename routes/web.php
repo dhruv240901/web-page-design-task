@@ -25,10 +25,11 @@ Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login'
 Route::get('resetpassword', [AuthController::class,'ViewResetPassword'])->name('view-reset-password');
 Route::post('resetpassword', [AuthController::class,'ResetPassword'])->name('reset-password');
 
-Route::group(['middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth','firstlogin']], function(){
     Route::get('logout', [AuthController::class,'logout'])->name('logout');
-    Route::get('list',[UserController::class,'UserList'])->name('user-list');
-    Route::post('store-user',[UserController::class,'store'])->name('store-user');
-    Route::post('update-user',[UserController::class,'update'])->name('update-user');
-    Route::post('delete-user',[UserController::class,'destroy'])->name('delete-user');
+    Route::prefix('user')->group(function(){
+        Route::post('store',[UserController::class,'store'])->name('store-user');
+        Route::post('update',[UserController::class,'update'])->name('update-user');
+        Route::post('delete',[UserController::class,'destroy'])->name('delete-user');
+    });
 });

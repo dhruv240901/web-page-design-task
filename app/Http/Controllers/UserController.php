@@ -164,10 +164,4 @@ class UserController extends Controller
         }
         return $response;
     }
-
-    public function UserList()
-    {
-        $users=User::where('owner_id',auth()->id())->get();
-        return view('userlist',compact('users'));
-    }
 }
