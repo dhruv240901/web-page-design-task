@@ -48,7 +48,12 @@ class UserController extends Controller
                 <td>'. $value->email .'</td>
                 <td>'. $value->phone .'</td>
                 <td>
-                    fvfvvf
+                    <a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.',"'.$value->phone.'")" class="btn btn-success">
+                        <img src="'. asset('images/edit.svg') .'" alt="">
+                    </a>
+                    <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
+                        <img src="'. asset('images/delete.svg') .'" alt="">
+                    </a>
                 </td>
             </tr>';
             }

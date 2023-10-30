@@ -87,6 +87,7 @@ function opendeletemodal(id)
 }
 $(document).ready(function (){
 
+        $('#user_table').DataTable();
         $("#exampleInputfirstname-error").hide();
         let firstnameError = true;
         $("#firstname").keyup(function () {

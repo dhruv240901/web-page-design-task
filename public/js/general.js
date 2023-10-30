@@ -8,7 +8,6 @@ $(document).ready(function () {
         $(".message-list").slideToggle();
     });
 
-    $('#user_table').DataTable();
     let datetime = new Date();
     let hour = datetime.getHours() % 12 || 12;
     let minute = datetime.getMinutes();
@@ -227,6 +226,11 @@ $("#loginform").validate({
             required: true,
             minlength: 6,
         },
+        confirmpassword:{
+            required:true,
+            minlength: 6,
+            equalTo: "#exampleInputPassword1"
+        }
     },
     messages: {
         email: {
@@ -237,6 +241,44 @@ $("#loginform").validate({
             required: "Please enter password",
             minlength:
                 "Please enter password greater than or equal to 6 characters",
+        },
+    },
+    submitHandler: function (form) {
+        form.submit();
+    },
+});
+
+// Validate Reset Password Form
+$("#resetpasswordform").validate({
+    rules: {
+        email: {
+            required: true,
+            email: true,
+        },
+        password: {
+            required: true,
+            minlength: 6,
+        },
+        confirmpassword: {
+            required: "Please enter password",
+            minlength:"Please enter password greater than or equal to 6 characters",
+            equalTo:"Please enter the same password as above"
+        },
+    },
+    messages: {
+        email: {
+            required: "Please enter your email",
+            email: "Please enter valid email",
+        },
+        password: {
+            required: "Please enter password",
+            minlength:
+                "Please enter password greater than or equal to 6 characters",
+        },
+        confirmpassword: {
+            required: "Please enter password",
+            minlength:"Please enter password greater than or equal to 6 characters",
+            equalTo:"Please enter the same password as above"
         },
     },
     submitHandler: function (form) {
