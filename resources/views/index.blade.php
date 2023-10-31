@@ -49,7 +49,30 @@
                         </tr>
                     </thead>
                     <tbody id="userdata">
-                       @include('userlist')
+                       {{-- @include('userlist') --}}
+                       @foreach ($users as $k => $value)
+                        <tr id="user{{$value->id}}">
+                            <input type="hidden" value="{{$value->id}}" id="user_id" name="user_id">
+                            <th scope="row">{{ $k + 1 }}</th>
+                            <td id="firstname{{$value->id}}">{{ $value->firstname }}</td>
+                            <td id="lastname{{$value->id}}">{{ $value->lastname }}</td>
+                            <td id="email{{$value->id}}">{{ $value->email }}</td>
+                            <td id="phone{{$value->id}}">{{ $value->phone }}</td>
+                            <td>
+                                @auth
+                                @if($value->owner_id==auth()->id())
+                                <a href="javascript:void(0);" type="button" onclick="openeditmodal('{{$value->id}}')" class="btn btn-success">
+                                    <img src="{{ asset('images/edit.svg') }}" alt="">
+                                </a>
+                                <a href="javascript:void(0);" type="button" onclick="opendeletemodal('{{$value->id}}')" class="btn btn-danger">
+                                    <img src="{{ asset('images/delete.svg') }}" alt="">
+                                </a>
+                                @endif
+                                @endauth
+                            </td>
+                        </tr>
+                        @endforeach
+
                     </tbody>
                 </table>
             </div>
@@ -66,28 +89,92 @@
     </div>
 @endsection
 @section('jscontent')
+var table=$('#user_table').DataTable({
+    "createdRow" : function ( row, data_use, dataIndex ) {
+        $(row).attr('id', dataIndex);
+    },
+});
+
 function openaddmodal()
 {
-    $('#addUserModal').modal('show');
+    $('#UserModal').modal('show');
+    $('.modal-title').html('');
+    $('.modal-title').html('Add User');
+    $('#user_id').val('');
+    $('#userform')[0].reset();
+    $('.error').hide()
+    $('#userbtn').html('');
+    $('#userbtn').html('Submit');
 }
-function openeditmodal(id,firstname,lastname,email,phone)
+function openeditmodal(id)
 {
-    $('#editUserModal').modal('show');
+    $('#UserModal').modal('show');
+    $('.modal-title').html('');
+    $('.modal-title').html('Edit User')
     $('#user_id').val(id);
-    $('#oldfirstname').val(firstname);
-    $('#oldlastname').val(lastname);
-    $('#oldEmail').val(email);
-    $('#oldPhone').val(phone);
+    $('#firstname').val($('#firstname'+id).html())
+    $('#lastname').val($('#lastname'+id).html())
+    $('#Email').val($('#email'+id).html())
+    $('#Phone').val($('#phone'+id).html())
+    $('.error').hide()
+    $('#userbtn').html('');
+    $('#userbtn').html('Update');
 }
 
 function opendeletemodal(id)
 {
-    $('#deleteUserModal').modal('show');
-    $('#userid').val(id);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this user!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: "{{ route('delete-user') }}",
+                data: {
+                    '_token':'{{csrf_token()}}',
+                    'user_id':id,
+                },
+                dataType: "json",
+                success:function(response){
+                    if(response['status']==200){
+                        table.clear();
+                        var count=1
+                        for (var i = 0; i < response['data'].length; i++) {
+                            var row = table.row.add([
+                                count++,
+                                response['data'][i].firstname,
+                                response['data'][i].lastname,
+                                response['data'][i].email,
+                                response['data'][i].phone,
+                                `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${response['data'][i].id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal(${response['data'][i].id})"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`
+                            ]).draw(false).node();
+                            $(row).find('td:eq(1)').attr('id', 'firstname' + response['data'][i].id);
+                            $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
+                            $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
+                            $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
+                        }
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text:'User has been deleted successfully.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                }
+            })
+        }
+      })
 }
 $(document).ready(function (){
 
-        $('#user_table').DataTable();
+
         $("#exampleInputfirstname-error").hide();
         let firstnameError = true;
         $("#firstname").keyup(function () {
@@ -148,23 +235,25 @@ $(document).ready(function (){
                 $("#exampleInputEmail-error").html("Please enter valid email");
                 emailError = false;
             } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '{{route('check_email_unique')}}',
-                    data: { _token:$('#csrf-token').val(),
-                            email: $("#Email").val()
-                    },
-                    success: function (response) {
-                        if (response=='false') {
-                            $("#exampleInputEmail-error").show();
-                            $("#exampleInputEmail-error").html("Email Id already exist");
-                            emailError = false;
-                        } else {
-                            $("#exampleInputEmail-error").hide();
-                            emailError=true;
+                if($('#user_id').val()==""){
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{route('check_email_unique')}}',
+                        data: { _token:$('#csrf-token').val(),
+                                email: $("#Email").val()
+                        },
+                        success: function (response) {
+                            if (response=='false') {
+                                $("#exampleInputEmail-error").show();
+                                $("#exampleInputEmail-error").html("Email Id already exist");
+                                emailError = false;
+                            } else {
+                                $("#exampleInputEmail-error").hide();
+                                emailError=true;
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
         }
@@ -195,7 +284,7 @@ $(document).ready(function (){
             }
         }
 
-        $("#adduserbtn").click(function () {
+        $("#userbtn").click(function () {
             validateFirstname();
             validateLastname();
             validateEmail();
@@ -206,154 +295,77 @@ $(document).ready(function (){
                 emailError==true &&
                 phoneError==true
             ) {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('store-user') }}",
-                    data: $("#adduserform").serialize(),
-                    dataType: "json",
-                    success:function(response){
-                        if(response['status']=='success'){
-                            $("#addUserModal").modal("toggle");
-                            $('#user_table').DataTable();
-                            $('#userdata').html(response.data)
-                            $('#adduserform')[0].reset();
-                            toastr.success(''+response.message+'')
+                if($('#user_id').val()==""){
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ route('store-user') }}",
+                        data: $("#userform").serialize(),
+                        dataType: "json",
+                        success:function(response){
+                            if(response['status']==200){
+                                table.clear();
+                                var count=1
+                                for (var i = 0; i < response['data'].length; i++) {
+                                    var row = table.row.add([
+                                        count++,
+                                        response['data'][i].firstname,
+                                        response['data'][i].lastname,
+                                        response['data'][i].email,
+                                        response['data'][i].phone,
+                                        `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${response['data'][i].id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal(${response['data'][i].id})"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`
+                                    ]).draw(false).node();
+                                    $(row).find('td:eq(1)').attr('id', 'firstname' + response['data'][i].id);
+                                    $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
+                                    $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
+                                    $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
+                                }
+                                $("#UserModal").modal("toggle");
+                                $('#userform')[0].reset();
+                                toastr.success(''+response.message+'')
+                            }
                         }
+                    })
+
+                }
+                    else{
+                        $.ajax({
+                            method: "POST",
+                            url: "{{ route('update-user') }}",
+                            data: $("#userform").serialize(),
+                            dataType: "json",
+                            success:function(response){
+                                if(response['status']==200){
+                                    table.clear();
+                                    var count=1
+                                    for (var i = 0; i < response['data'].length; i++) {
+                                        var row = table.row.add([
+                                            count++,
+                                            response['data'][i].firstname,
+                                            response['data'][i].lastname,
+                                            response['data'][i].email,
+                                            response['data'][i].phone,
+                                            `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${response['data'][i].id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal(${response['data'][i].id})"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`
+                                        ]).draw(false).node();
+                                        $(row).find('td:eq(1)').attr('id', 'firstname' + response['data'][i].id);
+                                        $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
+                                        $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
+                                        $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
+                                    }
+                                    $("#UserModal").modal("toggle");
+                                    $('#userform')[0].reset();
+                                    toastr.success(''+response.message+'')
+                                }
+                            }
+                        })
                     }
-                })
-                return true
-            } else {
-                return false;
-            }
-        });
-
-        $("#exampleOldInputfirstnameError").hide();
-        let oldfirstnameError = true;
-        $("#oldfirstname").keyup(function () {
-            validateOldFirstname();
-        });
-
-        function validateOldFirstname() {
-            let oldfirstnameValue = $("#oldfirstname").val();
-            if (oldfirstnameValue.length == "") {
-                $("#exampleOldInputfirstnameError").show();
-                $("#exampleOldInputfirstnameError").html("Please enter firstname");
-                oldfirstnameError = false;
-                return false;
-            } else {
-                $("#exampleOldInputfirstnameError").hide();
-                oldfirstnameError = true;
-            }
-        }
-
-
-        $("#exampleOldInputlastnameError").hide();
-        let oldlastnameError = true;
-        $("#oldlastname").keyup(function () {
-            validateOldLastname();
-        });
-
-        function validateOldLastname() {
-            let oldlastnameValue = $("#oldlastname").val();
-            if (oldlastnameValue.length == "") {
-                $("#exampleOldInputlastnameError").show();
-                $("#exampleOldInputlastnameError").html("Please enter lastname");
-                oldlastnameError = false;
-                return false;
-            } else {
-                $("#exampleOldInputlastnameError").hide();
-                oldlastnameError = true;
-            }
-        }
-
-        $("#exampleOldInputEmailError").hide();
-        let oldemailError = true;
-        $("#oldEmail").keyup(function () {
-            validateOldEmail();
-
-        });
-
-        function validateOldEmail() {
-            let oldemailValue = $("#oldEmail").val();
-            let regex =
-                /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
-            if (oldemailValue.length == "") {
-                $("#exampleOldInputEmailError").show();
-                $("#exampleOldInputEmailError").html("Please enter email");
-                oldemailError = false;
-                return false;
-            } else if (!regex.test(oldemailValue)) {
-                $("#exampleOldInputEmailError").show();
-                $("#exampleOldInputEmailError").html("Please enter valid email");
-                oldemailError = false;
-            } else {
-                $("#exampleOldInputEmailError").hide();
-                oldemailError=true;
-
-            }
-
-        }
-
-
-        $("#exampleOldInputPhoneError").hide();
-        let oldphoneError = true;
-        $("#oldPhone").keyup(function () {
-            validateOldPhone();
-        });
-
-        function validateOldPhone() {
-            let oldphoneValue = $("#oldPhone").val();
-            if (oldphoneValue.length == "") {
-                $("#exampleOldInputPhoneError").show();
-                $("#exampleOldInputPhoneError").html("Please enter phone number");
-                oldphoneError = false;
-                return false;
-            }else if(oldphoneValue.length != 10){
-                $("#exampleOldInputPhoneError").show();
-                $("#exampleOldInputPhoneError").html("Please enter valid phone number");
-                oldphoneError = false;
-                return false;
-            }
+                    return true
+                }
             else {
-                $("#exampleOldInputPhoneError").hide();
-                oldphoneError = true;
-            }
-        }
-
-        $("#edituserbtn").click(function () {
-            validateOldFirstname();
-            validateOldLastname();
-            validateOldEmail();
-            validateOldPhone();
-            if (
-                oldfirstnameError == true &&
-                oldlastnameError == true &&
-                oldemailError==true &&
-                oldphoneError==true
-            ){
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('update-user') }}",
-                    data: $("#edituserform").serialize(),
-                    dataType: "json",
-                    success:function(response){
-                        console.log(response)
-                        if(response['status']=='success')
-                        {
-                            $("#editUserModal").modal("toggle");
-                            $('#user_table').DataTable().draw();
-                            $('#userdata').html(response.data);
-                            toastr.success(''+response.message+'')
-                        }
-                    }
-                })
-                return true
-            }else{
-                return false
+                return false;
             }
         });
 
-        $("#deleteuserbtn").click(function () {
+        {{-- $("#deleteuserbtn").click(function () {
             $.ajax({
                 method: "POST",
                 url: "{{ route('delete-user') }}",
@@ -368,7 +380,7 @@ $(document).ready(function (){
                     }
                 }
             })
-        });
+        }); --}}
     });
 
 @endsection

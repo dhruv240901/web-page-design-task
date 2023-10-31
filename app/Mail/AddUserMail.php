@@ -38,7 +38,7 @@ class AddUserMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.addusermail',
+            view: 'emails.addusermail',
             with: [
                 'userdata' =>$this->userdata,
                 'randompassword'=>$this->randompassword

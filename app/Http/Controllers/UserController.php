@@ -8,6 +8,7 @@ use Mail;
 use App\Mail\AddUserMail;
 use Hash;
 use Session;
+use App\Jobs\AddUserMailJob;
 
 class UserController extends Controller
 {
@@ -16,19 +17,19 @@ class UserController extends Controller
     {
         $request->validate([
             'firstname'=>'required',
-            'lastname'=>'required',
-            'email'=>'required|email|unique:users',
-            'phone'=>'required|min:10|max:10'
+            'lastname' =>'required',
+            'email'    =>'required|email|unique:users',
+            'phone'    =>'required|min:10|max:10'
         ]);
 
         $randompassword=rand(100000,999999);
         $insertdata=[
-            'firstname'=>$request->firstname,
-            'lastname'=>$request->lastname,
-            'email'=>$request->email,
-            'phone'=>$request->phone,
-            'password'=>Hash::make($randompassword),
-            'owner_id'=>auth()->id(),
+            'firstname'         =>$request->firstname,
+            'lastname'          =>$request->lastname,
+            'email'             =>$request->email,
+            'phone'             =>$request->phone,
+            'password'          =>Hash::make($randompassword),
+            'owner_id'          =>auth()->id(),
             'is_firsttime_login'=>'1'
         ];
 
@@ -40,40 +41,18 @@ class UserController extends Controller
 
         if($userdata){
             $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
-            $userlist='';
-            foreach($users as $k=>$value){
-                $userlist.='<tr id="user'.$value->id.'">
-                <input type="hidden" value="'.$value->id.'" id="user_id" name="user_id">
-                <th scope="row">'. $k + 1 .'</th>
-                <td>'. $value->firstname .'</td>
-                <td>'. $value->lastname .'</td>
-                <td>'. $value->email .'</td>
-                <td>'. $value->phone .'</td>
-                <td>';
-                if($value->owner_id==auth()->id()){
-                    $userlist.='<a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.','.$value->phone.'.toString())" class="btn btn-success">
-                        <img src="'. asset('images/edit.svg') .'" alt="">
-                    </a>
-                    <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
-                        <img src="'. asset('images/delete.svg') .'" alt="">
-                    </a>';
-                }
-                $userlist.='</td>
-            </tr>';
-            }
-
             $response=[
-                'status'=>'success',
+                'status' =>200,
                 'message'=>'User Account Created Successfully',
-                'data'=>$userlist
+                'data'   =>$users
             ];
         }else {
             $response=[
-                'status'=>'error',
-                'message'=>'User Not Account Created',
+                'status' =>500,
+                'message'=>'Internal Server Error',
             ];
         }
-        return $response;
+        return response()->json($response);
     }
 
     // function to update user
@@ -81,54 +60,32 @@ class UserController extends Controller
     {
         $request->validate([
             'firstname'=>'required',
-            'lastname'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required|min:10|max:10'
+            'lastname' =>'required',
+            'email'    =>'required|email',
+            'phone'    =>'required|min:10|max:10'
         ]);
         $user=User::findOrFail($request->user_id);
         $updatedata=[
             'firstname'=>$request->firstname,
-            'lastname'=>$request->lastname,
-            'email'=>$request->email,
-            'phone'=>$request->phone
+            'lastname' =>$request->lastname,
+            'email'    =>$request->email,
+            'phone'    =>$request->phone
         ];
         $updateuser=$user->update($updatedata);
         if($updateuser){
             $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
-            $userlist='';
-            foreach($users as $k=>$value){
-                $userlist.='<tr id="user'.$value->id.'">
-                <input type="hidden" value="'.$value->id.'" id="user_id" name="user_id">
-                <th scope="row">'. $k + 1 .'</th>
-                <td>'. $value->firstname .'</td>
-                <td>'. $value->lastname .'</td>
-                <td>'. $value->email .'</td>
-                <td>'. $value->phone .'</td>
-                <td>';
-                if($value->owner_id==auth()->id()){
-                    $userlist.='<a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.','.$value->phone.')" class="btn btn-success">
-                        <img src="'. asset('images/edit.svg') .'" alt="">
-                    </a>
-                    <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
-                        <img src="'. asset('images/delete.svg') .'" alt="">
-                    </a>';
-                }
-                $userlist.='</td>
-            </tr>';
-            }
-
             $response=[
-                'status'=>'success',
+                'status' =>200,
                 'message'=>'User Account Updated Successfully',
-                'data'=>$userlist
+                'data'   =>$users
             ];
         }else {
             $response=[
-                'status'=>'error',
-                'message'=>'User Account Not Updated',
+                'status' =>500,
+                'message'=>'Internal Server Error',
             ];
         }
-        return $response;
+        return response()->json($response);
     }
 
     // function to delete user
@@ -137,39 +94,17 @@ class UserController extends Controller
         $deleteuser=User::findOrFail($request->user_id)->delete();
         if($deleteuser){
             $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
-            $userlist='';
-            foreach($users as $k=>$value){
-                $userlist.='<tr id="user'.$value->id.'">
-                <input type="hidden" value="'.$value->id.'" id="user_id" name="user_id">
-                <th scope="row">'. $k + 1 .'</th>
-                <td>'. $value->firstname .'</td>
-                <td>'. $value->lastname .'</td>
-                <td>'. $value->email .'</td>
-                <td>'. $value->phone .'</td>
-                <td>';
-                if($value->owner_id==auth()->id()){
-                    $userlist.='<a href="javascript:void(0);" type="button" onclick="openeditmodal('.$value->id.','.$value->firstname.','.$value->lastname.','.$value->email.','.$value->phone.')" class="btn btn-success">
-                        <img src="'. asset('images/edit.svg') .'" alt="">
-                    </a>
-                    <a href="javascript:void(0);" type="button" onclick="opendeletemodal('.$value->id.')" class="btn btn-danger">
-                        <img src="'. asset('images/delete.svg') .'" alt="">
-                    </a>';
-                }
-                $userlist.='</td>
-            </tr>';
-            }
-
             $response=[
-                'status'=>'success',
+                'status' =>200,
                 'message'=>'User Account Deleted Successfully',
-                'data'=>$userlist
+                'data'   =>$users
             ];
         }else{
             $response=[
-                'status'=>'error',
-                'message'=>'User Account Not Deleted Successfully'
+                'status' =>500,
+                'message'=>'Internal Server Error',
             ];
         }
-        return $response;
+        return response()->json($response);
     }
 }
