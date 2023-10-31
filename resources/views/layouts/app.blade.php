@@ -52,10 +52,19 @@
 <script src="{{ asset('js/general.js') }}"></script>
 <script>
     $('#logout-btn').click(function() {
-        let text = 'Are you sure you want to logout?'
-        if (confirm(text) == true) {
-            window.location.href = "{{ route('logout') }}";
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to logout!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href="{{route('logout')}}"
+            }
+        })
     })
 </script>
 <script>
