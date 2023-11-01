@@ -8,7 +8,7 @@ use Mail;
 use App\Mail\AddUserMail;
 use Hash;
 use Session;
-use App\Jobs\AddUserMailJob;
+use Auth;
 
 class UserController extends Controller
 {
@@ -34,12 +34,13 @@ class UserController extends Controller
         ];
 
         $userdata=User::create($insertdata);
-
-        dispatch(function() use ($userdata, $randompassword){
-            Mail::to($userdata->email)->send(new AddUserMail($userdata,$randompassword));
+        $authuser=Auth::user();
+        dispatch(function() use ($userdata, $randompassword,$authuser){
+            Mail::to($userdata['email'])->send(new AddUserMail($userdata,$randompassword,$authuser));
         });
 
         if($userdata){
+
             $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
             $response=[
                 'status' =>200,
