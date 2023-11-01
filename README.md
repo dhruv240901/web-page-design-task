@@ -27,7 +27,7 @@ Before you begin, ensure you have met the following requirements:
    ```bash
    composer update
 
-4. Create a .env file by copying the .env.example file and configure your database
+4. Create a .env file by copying the .env.example file and configure your database, queue
    and mail settings:
 
    ```bash
@@ -49,6 +49,11 @@ Before you begin, ensure you have met the following requirements:
    php artisan serve
 
 8. Access the application in your web browser at http://localhost:8000.
+9. While adding user run following command:
+
+    ```bash
+   php artisan queue:work
+
 
 ## Features
 1. Render Sidebar Elements: In the application hompage the sidebar elements are 
