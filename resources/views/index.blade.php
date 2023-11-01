@@ -13,7 +13,7 @@
             </div>
         </div>
         @auth
-        @if(auth()->user()->is_firsttime_login=='0')
+        @if(auth()->user()->is_first_login=='0')
             <div class="row mt-3 profilecard">
                 <div class="card mb-3 profilecard-item">
                     <div class="row g-0">
@@ -80,7 +80,7 @@
         @endif
         @endauth
 
-        @if(auth()->check() ==false || (auth()->check() ==true && auth()->user()->is_firsttime_login=="1") )
+        @if(auth()->check() ==false || (auth()->check() ==true && auth()->user()->is_first_login=="1") )
             <div class="welcome-text">
                 <h1 class="display-1">Welcome to Our</h1></br>
                 <h1 class="display-1">Website</h1>

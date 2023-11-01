@@ -29,7 +29,7 @@ class UserController extends Controller
             'phone'              =>$request->phone,
             'password'           =>Hash::make($randompassword),
             'owner_id'           =>auth()->id(),
-            'is_firsttime_login' =>'1'
+            'is_first_login' =>'1'
         ];
 
         $userdata=User::create($insertdata);

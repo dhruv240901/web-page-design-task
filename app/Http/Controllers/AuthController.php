@@ -63,7 +63,7 @@ class AuthController extends Controller
 
        $credentials=$request->only('email','password');
        if(Auth::attempt($credentials)){
-            if(auth()->user()->is_firsttime_login=='1'){
+            if(auth()->user()->is_first_login=='1'){
                 return redirect()->route('view-change-password')->with('success','Please change your password!');
             }
             return redirect()->route('index')->with('success','Logged In successfully!');
@@ -98,7 +98,7 @@ class AuthController extends Controller
     public function ChangePassword(Request $request)
     {
         $user=User::where('email',auth()->user()->email)->first();
-        $user->update(['password'=>Hash::make($request->password),'is_firsttime_login'=>'0']);
+        $user->update(['password'=>Hash::make($request->password),'is_first_login'=>'0']);
         return redirect()->route('login')->with('success','Password Changed Successfully Please login!');
     }
 }

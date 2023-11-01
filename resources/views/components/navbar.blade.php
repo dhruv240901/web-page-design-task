@@ -1,6 +1,6 @@
  <nav class="navbar navbar-expand px-2">
      @auth
-     @if(auth()->user()->is_firsttime_login=='0')
+     @if(auth()->user()->is_first_login=='0')
          <div class="side-nav-button p-2 me-3 text-light" id="sidenav-btn">
              <i class="fa-solid fa-bars"></i>
          </div>
@@ -12,7 +12,7 @@
      <div class="navbar-collapse nav-items">
      </div>
      @auth
-     @if(auth()->user()->is_firsttime_login=='0')
+     @if(auth()->user()->is_first_login=='0')
          <ul class="navbar-nav me-auto">
              <li class="nav-item">
                  <div class="p-2 me-3 dropdown">
@@ -60,7 +60,7 @@
      @endif
      @endauth
      @auth
-        @if(auth()->user()->is_firsttime_login=='0')
+        @if(auth()->user()->is_first_login=='0')
         <div class="p-2 me-3 dropdown text-light profile-dropdown-icon">
             <a class="dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -83,7 +83,7 @@
         @endif
         @endauth
 
-     @if(auth()->check() ==false || (auth()->check() ==true && auth()->user()->is_firsttime_login=="1") )
+     @if(auth()->check() ==false || (auth()->check() ==true && auth()->user()->is_first_login=="1") )
          <li class="p-2 me-3">
              <a href="{{ route('login') }}" type="button" class="btn btn-success">Login</a>
          </li>
