@@ -20,6 +20,6 @@ class FirstLoginMiddleware
         {
             return $next($request);
         }
-        return redirect()->route('login')->with('error','Please reset your password');
+        return redirect()->route('view-change-password')->with('error','Please change your password');
     }
 }

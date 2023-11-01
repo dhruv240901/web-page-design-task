@@ -59,13 +59,13 @@
                             <td id="lastname{{$value->id}}">{{ $value->lastname }}</td>
                             <td id="email{{$value->id}}">{{ $value->email }}</td>
                             <td id="phone{{$value->id}}">{{ $value->phone }}</td>
-                            <td class="d-flex">
+                            <td>
                                 @auth
                                 @if($value->owner_id==auth()->id())
                                 <a href="javascript:void(0);" type="button" onclick="openeditmodal('{{$value->id}}')" class="btn btn-success">
                                     <img src="{{ asset('images/edit.svg') }}" alt="">
                                 </a>
-                                <a href="javascript:void(0);" type="button" onclick="opendeletemodal('{{$value->id}}')" class="btn btn-danger mx-1">
+                                <a href="javascript:void(0);" type="button" onclick="opendeletemodal('{{$value->id}}')" class="btn btn-danger">
                                     <img src="{{ asset('images/delete.svg') }}" alt="">
                                 </a>
                                 @endif
@@ -158,7 +158,6 @@ function opendeletemodal(id)
                             $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
                             $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
                             $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
-                            $(row).find('td:eq(5)').attr({'class': 'd-flex'});
                         }
                         Swal.fire({
                             icon: 'success',
@@ -177,7 +176,7 @@ function opendeletemodal(id)
 function displayactionbutton(ownerid,id)
 {
     if(ownerid=='{{auth()->id()}}'){
-        return `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger mx-1" onclick="opendeletemodal('${id}')"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`;
+        return `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal('${id}')"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`;
     }else{
         return '';
     }
@@ -327,7 +326,6 @@ $(document).ready(function (){
                                     $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
                                     $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
                                     $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
-                                    $(row).find('td:eq(5)').attr({'class': 'd-flex'});
                                 }
                                 $("#UserModal").modal("toggle");
                                 $('#userform')[0].reset();
@@ -360,7 +358,6 @@ $(document).ready(function (){
                                         $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
                                         $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
                                         $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
-                                        $(row).find('td:eq(5)').attr({'class': 'd-flex'});
                                     }
                                     $("#UserModal").modal("toggle");
                                     $('#userform')[0].reset();

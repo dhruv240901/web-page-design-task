@@ -41,9 +41,9 @@ class AddUserMail extends Mailable
         return new Content(
             markdown: 'emails.addusermail',
             with: [
-                'userdata'      =>$this->userdata,
-                'randompassword'=>$this->randompassword,
-                'authuser'      =>$this->authuser
+                'userdata'       =>$this->userdata,
+                'randompassword' =>$this->randompassword,
+                'authuser'       =>$this->authuser
             ],
         );
     }

@@ -6,27 +6,26 @@ use Illuminate\Http\Request;
 use Auth;
 use Hash;
 use App\Models\User;
-use Session;
+
 class AuthController extends Controller
 {
      // function to render signup form
-    public function signup(Request $request){
+    public function signup(){
         if(Auth::check()){
-            if(auth()->user()->is_firsttime_login=='0'){
-                return redirect()->route('index');
-            }        }
-            return view('signup');
+            return redirect()->route('index');
+        }
+        return view('signup');
     }
 
     // function to create user account
     public function CustomSignup(Request $request){
        $validator=$request->validate([
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required|min:10|max:10',
-            'password'=>'required|min:6',
-            'confirmpassword'=>'required|min:6|same:password'
+            'firstname'       =>'required',
+            'lastname'        =>'required',
+            'email'           =>'required|email|unique:users',
+            'phone'           =>'required|min:10|max:10|numeric',
+            'password'        =>'required|min:6',
+            'confirmpassword' =>'required|min:6|same:password'
        ]);
 
        $checkemailunique=User::where('email',$request->email)->first();
@@ -36,11 +35,11 @@ class AuthController extends Controller
        }
        else{
             $insertdata=[
-                    'firstname'=>$request->firstname,
-                    'lastname'=>$request->lastname,
-                    'email'=>$request->email,
-                    'phone'=>$request->phone,
-                    'password'=>Hash::make($request->password),
+                'firstname' =>$request->firstname,
+                'lastname'  =>$request->lastname,
+                'email'     =>$request->email,
+                'phone'     =>$request->phone,
+                'password'  =>Hash::make($request->password),
             ];
             User::create($insertdata);
             return redirect()->route('login')->with('success','Account created successfully!');
@@ -48,13 +47,9 @@ class AuthController extends Controller
     }
 
     // function to render login page
-    public function login(Request $request){
+    public function login(){
         if(Auth::check()){
-            if(auth()->user()->is_firsttime_login=='0'){
-                return redirect()->route('index');
-            }else{
-                return redirect()->route('view-change-password');
-            }
+            return redirect()->route('index');
         }
         return view('login');
     }
@@ -62,8 +57,8 @@ class AuthController extends Controller
     // function to login user into their account
     public function CustomLogin(Request $request){
         $validator=$request->validate([
-            'email'=>'required|email',
-            'password'=>'required|min:6'
+            'email'    =>'required|email',
+            'password' =>'required|min:6'
        ]);
 
        $credentials=$request->only('email','password');
@@ -77,7 +72,7 @@ class AuthController extends Controller
     }
 
     // function to logout user
-    public function logout(Request $request){
+    public function logout(){
        auth()->logout();
        return redirect()->route('index')->with('success','Logout Successfully!');
     }
@@ -93,18 +88,17 @@ class AuthController extends Controller
         }
     }
 
-    // function to render reset password form
+    // function to render change password form
     public function ViewChangePassword()
     {
         return view('changepassword');
     }
 
-    // function to perform reset password
+    // function to update password
     public function ChangePassword(Request $request)
     {
         $user=User::where('email',auth()->user()->email)->first();
         $user->update(['password'=>Hash::make($request->password),'is_firsttime_login'=>'0']);
-        Session::flush();
         return redirect()->route('login')->with('success','Password Changed Successfully Please login!');
     }
 }
