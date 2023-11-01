@@ -54,7 +54,6 @@ Before you begin, ensure you have met the following requirements:
     ```bash
    php artisan queue:work
 
-
 ## Features
 1. Render Sidebar Elements: In the application hompage the sidebar elements are 
    rendered using Service Provider in Laravel.  
