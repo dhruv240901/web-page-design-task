@@ -4,7 +4,7 @@
     <div class="display-area p-3">
         @include('components.flash')
 
-        <div class="row page-titles mt-3 day-time" style="float:right;margin-right:10px">
+        <div class="row page-titles mt-3 day-time mx-1 float-end">
             <div class="col-md-6 col-4 align-self-center">
                 <div class=" float-right mr-2 hidden-sm-down">
                     <button class="btn btn-secondary datetime" type="button" id="dropdownMenuButton" aria-haspopup="true"
