@@ -8,14 +8,14 @@
             <div class="col-md-6 col-4 align-self-center">
                 <div class=" float-right mr-2 hidden-sm-down">
                     <button class="btn btn-secondary datetime" type="button" id="dropdownMenuButton" aria-haspopup="true"
-                        aria-expanded="false" style="cursor: default;border:2px solid #0e0d0d" disabled></button>
+                        aria-expanded="false" disabled></button>
                 </div>
             </div>
         </div>
         @auth
         @if(auth()->user()->is_firsttime_login=='0')
             <div class="row mt-3 profilecard">
-                <div class="card mb-3" style="border: 2px solid">
+                <div class="card mb-3 profilecard-item">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="{{ asset('images/profile-icon.svg') }}" alt="user">
@@ -29,8 +29,8 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex mt-5" style="justify-content: center">
-                <table class="table table-striped" id="user_table" style="width: 75%;background-color: #e8e9df;border:2px solid">
+            <div class="d-flex mt-5 justify-content-center">
+                <table class="table table-striped" id="user_table">
                     <thead>
                         <tr>
                             <td scope="col" colspan="6">
@@ -59,13 +59,13 @@
                             <td id="lastname{{$value->id}}">{{ $value->lastname }}</td>
                             <td id="email{{$value->id}}">{{ $value->email }}</td>
                             <td id="phone{{$value->id}}">{{ $value->phone }}</td>
-                            <td>
+                            <td class="d-flex">
                                 @auth
                                 @if($value->owner_id==auth()->id())
                                 <a href="javascript:void(0);" type="button" onclick="openeditmodal('{{$value->id}}')" class="btn btn-success">
                                     <img src="{{ asset('images/edit.svg') }}" alt="">
                                 </a>
-                                <a href="javascript:void(0);" type="button" onclick="opendeletemodal('{{$value->id}}')" class="btn btn-danger">
+                                <a href="javascript:void(0);" type="button" onclick="opendeletemodal('{{$value->id}}')" class="btn btn-danger mx-1">
                                     <img src="{{ asset('images/delete.svg') }}" alt="">
                                 </a>
                                 @endif
@@ -81,9 +81,7 @@
         @endauth
 
         @if(auth()->check() ==false || (auth()->check() ==true && auth()->user()->is_firsttime_login=="1") )
-            <div
-                style="text-align: center;margin-top: 10%;font-family: 'Vesper Libre', serif;
-        font-family: 'Young Serif', serif;">
+            <div class="welcome-text">
                 <h1 class="display-1">Welcome to Our</h1></br>
                 <h1 class="display-1">Website</h1>
             </div>
@@ -154,12 +152,13 @@ function opendeletemodal(id)
                                 response['data'][i].lastname,
                                 response['data'][i].email,
                                 response['data'][i].phone,
-                                `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${response['data'][i].id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal(${response['data'][i].id})"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`
+                                displayactionbutton(response['data'][i].owner_id,response['data'][i].id)
                             ]).draw(false).node();
                             $(row).find('td:eq(1)').attr('id', 'firstname' + response['data'][i].id);
                             $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
                             $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
                             $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
+                            $(row).find('td:eq(5)').attr({'class': 'd-flex'});
                         }
                         Swal.fire({
                             icon: 'success',
@@ -174,9 +173,17 @@ function opendeletemodal(id)
         }
       })
 }
+
+function displayactionbutton(ownerid,id)
+{
+    if(ownerid=='{{auth()->id()}}'){
+        return `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger mx-1" onclick="opendeletemodal('${id}')"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`;
+    }else{
+        return '';
+    }
+}
+
 $(document).ready(function (){
-
-
         $("#exampleInputfirstname-error").hide();
         let firstnameError = true;
         $("#firstname").keyup(function () {
@@ -314,12 +321,13 @@ $(document).ready(function (){
                                         response['data'][i].lastname,
                                         response['data'][i].email,
                                         response['data'][i].phone,
-                                        `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${response['data'][i].id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal(${response['data'][i].id})"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`
+                                        displayactionbutton(response['data'][i].owner_id,response['data'][i].id)
                                     ]).draw(false).node();
                                     $(row).find('td:eq(1)').attr('id', 'firstname' + response['data'][i].id);
                                     $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
                                     $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
                                     $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
+                                    $(row).find('td:eq(5)').attr({'class': 'd-flex'});
                                 }
                                 $("#UserModal").modal("toggle");
                                 $('#userform')[0].reset();
@@ -346,12 +354,13 @@ $(document).ready(function (){
                                             response['data'][i].lastname,
                                             response['data'][i].email,
                                             response['data'][i].phone,
-                                            `<a href="javascript:void(0);" type="button" class="btn btn-success" onclick="openeditmodal('${response['data'][i].id}')"><img src="{{ asset('images/edit.svg') }}" alt=""></a> <a href="javascript:void(0);" type="button" class="btn btn-danger" onclick="opendeletemodal(${response['data'][i].id})"><img src="{{ asset('images/delete.svg') }}" alt=""></a>`
+                                            displayactionbutton(response['data'][i].owner_id,response['data'][i].id)
                                         ]).draw(false).node();
                                         $(row).find('td:eq(1)').attr('id', 'firstname' + response['data'][i].id);
                                         $(row).find('td:eq(2)').attr('id', 'lastname' + response['data'][i].id);
                                         $(row).find('td:eq(3)').attr('id', 'email' + response['data'][i].id);
                                         $(row).find('td:eq(4)').attr('id', 'phone' + response['data'][i].id);
+                                        $(row).find('td:eq(5)').attr({'class': 'd-flex'});
                                     }
                                     $("#UserModal").modal("toggle");
                                     $('#userform')[0].reset();
@@ -367,22 +376,6 @@ $(document).ready(function (){
             }
         });
 
-        {{-- $("#deleteuserbtn").click(function () {
-            $.ajax({
-                method: "POST",
-                url: "{{ route('delete-user') }}",
-                data: $("#deleteuserform").serialize(),
-                dataType: "json",
-                success:function(response){
-                    if(response['status']=='success')
-                    {
-                        $('#user_table').DataTable().draw();
-                        $('#userdata').html(response.data);
-                        toastr.success(''+response.message+'')
-                    }
-                }
-            })
-        }); --}}
     });
 
 @endsection
