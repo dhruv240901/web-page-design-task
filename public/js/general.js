@@ -205,7 +205,7 @@ $("#signupform").validate({
             minlength:"Please enter password greater than or equal to 6 characters",
         },
         confirmpassword: {
-            required: "Please enter password",
+            required: "Please enter confirm password",
             minlength:"Please enter password greater than or equal to 6 characters",
             equalTo:"Please enter the same password as above"
         },
@@ -239,8 +239,7 @@ $("#loginform").validate({
         },
         password: {
             required: "Please enter password",
-            minlength:
-                "Please enter password greater than or equal to 6 characters",
+            minlength: "Please enter password greater than or equal to 6 characters",
         },
     },
     submitHandler: function (form) {
@@ -248,35 +247,26 @@ $("#loginform").validate({
     },
 });
 
-// Validate Reset Password Form
-$("#resetpasswordform").validate({
+// Validate Change Password Form
+$("#changepasswordform").validate({
     rules: {
-        email: {
-            required: true,
-            email: true,
-        },
         password: {
             required: true,
             minlength: 6,
         },
         confirmpassword: {
-            required: "Please enter password",
-            minlength:"Please enter password greater than or equal to 6 characters",
-            equalTo:"Please enter the same password as above"
+            required: true,
+            minlength: 6,
+            equalTo:"#exampleInputPassword1"
         },
     },
     messages: {
-        email: {
-            required: "Please enter your email",
-            email: "Please enter valid email",
-        },
         password: {
             required: "Please enter password",
-            minlength:
-                "Please enter password greater than or equal to 6 characters",
+            minlength:"Please enter password greater than or equal to 6 characters",
         },
         confirmpassword: {
-            required: "Please enter password",
+            required: "Please enter confirm password",
             minlength:"Please enter password greater than or equal to 6 characters",
             equalTo:"Please enter the same password as above"
         },
@@ -286,7 +276,7 @@ $("#resetpasswordform").validate({
     },
 });
 
-// $("#adduserbtn").click(function () {
+
 //     $("#adduserform").validate({
 //         rules: {
 //             firstname: {
@@ -328,42 +318,4 @@ $("#resetpasswordform").validate({
 //     });
 // });
 
-$("#edituserform").validate({
-    rules: {
-        firstname: {
-            required: true,
-        },
-        lastname: {
-            required: true,
-        },
-        email: {
-            required: true,
-            email: true,
-        },
-        phone: {
-            required: true,
-            minlength: 10,
-            maxlength: 10,
-        },
-    },
-    messages: {
-        firstname: {
-            required: "Please enter firstname",
-        },
-        lastname: {
-            required: "Please enter lastname",
-        },
-        email: {
-            required: "Please enter email",
-            email: "Please enter valid email",
-        },
-        phone: {
-            required: "Please enter phone number",
-            minlength: "Please enter valid phone number",
-            maxlength: "Please enter valid phone number",
-        },
-    },
-    submitHandler: function (form) {
-        form.submit();
-    },
-});
+

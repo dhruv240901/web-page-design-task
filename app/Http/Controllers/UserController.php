@@ -41,7 +41,7 @@ class UserController extends Controller
 
         if($userdata){
 
-            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
+            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->where('id','!=',auth()->id())->get();
             $response=[
                 'status' =>200,
                 'message'=>'User Account Created Successfully',
@@ -74,7 +74,7 @@ class UserController extends Controller
         ];
         $updateuser=$user->update($updatedata);
         if($updateuser){
-            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
+            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->where('id','!=',auth()->id())->get();
             $response=[
                 'status' =>200,
                 'message'=>'User Account Updated Successfully',
@@ -94,7 +94,7 @@ class UserController extends Controller
     {
         $deleteuser=User::findOrFail($request->user_id)->delete();
         if($deleteuser){
-            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->get();
+            $users=User::where('owner_id',auth()->id())->orwhere('id',auth()->user()->owner_id)->orwhere('owner_id',auth()->user()->owner_id)->where('owner_id','!=','null')->where('id','!=',auth()->id())->get();
             $response=[
                 'status' =>200,
                 'message'=>'User Account Deleted Successfully',

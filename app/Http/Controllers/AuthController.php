@@ -65,7 +65,7 @@ class AuthController extends Controller
        if(Auth::attempt($credentials)){
             if(auth()->user()->is_firsttime_login=='1'){
                 Session::put('email',auth()->user()->email);
-                return redirect()->route('view-reset-password')->with('success','Please reset you password!');
+                return redirect()->route('view-change-password')->with('success','Please reset you password!');
             }
             return redirect()->route('index')->with('success','Logged In successfully!');
        }
@@ -90,15 +90,15 @@ class AuthController extends Controller
     }
 
     // function to render reset password form
-    public function ViewResetPassword()
+    public function ViewChangePassword()
     {
-        return view('resetpassword');
+        return view('changepassword');
     }
 
-    // function to perform reset password 
-    public function ResetPassword(Request $request)
+    // function to perform reset password
+    public function ChangePassword(Request $request)
     {
-        $user=User::where('email',$request->email)->first();
+        $user=User::where('email',auth()->user()->email)->first();
         $user->update(['password'=>Hash::make($request->password),'is_firsttime_login'=>'0']);
         Session::flush();
         return redirect()->route('login')->with('success','Password Reset Successfully Please login!');
