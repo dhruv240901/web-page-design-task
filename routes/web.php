@@ -19,7 +19,7 @@ use App\Http\Controllers\UserController;
 Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('signup', [AuthController::class,'signup'])->name('signup');
 Route::post('signup', [AuthController::class,'CustomSignup'])->name('custom-signup');
-Route::post('checkemailunique', [AuthController::class,'CheckEmailUnique'])->name('check_email_unique');
+Route::post('checkUniqueEmail', [AuthController::class,'CheckUniqueEmail'])->name('check_unique_email');
 Route::get('login',[AuthController::class,'login'])->name('login');
 Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login');
 Route::get('changePassword', [AuthController::class,'ViewChangePassword'])->name('view-change-password')->middleware('auth');

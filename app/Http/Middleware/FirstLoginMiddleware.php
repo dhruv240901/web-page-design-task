@@ -20,7 +20,6 @@ class FirstLoginMiddleware
         {
             return $next($request);
         }
-        Auth::logout();
         return redirect()->route('login')->with('error','Please reset your password');
     }
 }

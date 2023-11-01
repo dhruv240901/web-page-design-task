@@ -4,7 +4,7 @@
     <div class="display-area p-3">
         @include('components.flash')
 
-        <div class="row page-titles mt-3 day-time mx-1 float-end">
+        <div class="row page-titles mt-3 day-time mx-5 float-end">
             <div class="col-md-6 col-4 align-self-center">
                 <div class=" float-right mr-2 hidden-sm-down">
                     <button class="btn btn-secondary datetime" type="button" id="dropdownMenuButton" aria-haspopup="true"
@@ -13,6 +13,7 @@
             </div>
         </div>
         @auth
+        @if(auth()->user()->is_firsttime_login=='0')
             <div class="row mt-3 profilecard">
                 <div class="card mb-3" style="border: 2px solid">
                     <div class="row g-0">
@@ -76,16 +77,17 @@
                     </tbody>
                 </table>
             </div>
+        @endif
         @endauth
 
-        @guest
+        @if(auth()->check() ==false || (auth()->check() ==true && auth()->user()->is_firsttime_login=="1") )
             <div
                 style="text-align: center;margin-top: 10%;font-family: 'Vesper Libre', serif;
         font-family: 'Young Serif', serif;">
                 <h1 class="display-1">Welcome to Our</h1></br>
                 <h1 class="display-1">Website</h1>
             </div>
-        @endguest
+        @endif
     </div>
 @endsection
 @section('jscontent')
@@ -238,7 +240,7 @@ $(document).ready(function (){
                 if($('#user_id').val()==""){
                     $.ajax({
                         type: 'POST',
-                        url: '{{route('check_email_unique')}}',
+                        url: '{{route('check_unique_email')}}',
                         data: { _token:$('#csrf-token').val(),
                                 email: $("#Email").val()
                         },

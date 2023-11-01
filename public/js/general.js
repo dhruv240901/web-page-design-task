@@ -160,7 +160,7 @@ $("#signupform").validate({
             required: true,
             email: true,
             remote: {
-                url: "/checkemailunique",
+                url: "/checkUniqueEmail",
                 type: "post",
                 data: {
                     email: function() {

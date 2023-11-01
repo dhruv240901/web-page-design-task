@@ -30,7 +30,9 @@
 
         <main>
             @auth
+            @if(auth()->user()->is_firsttime_login=='0')
                 @include('components.sidebar')
+            @endif
             @endauth
 
             @yield('content')

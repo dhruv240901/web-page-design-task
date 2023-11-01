@@ -12,9 +12,10 @@ class AuthController extends Controller
      // function to render signup form
     public function signup(Request $request){
         if(Auth::check()){
-            return redirect()->route('index');
-        }
-        return view('signup');
+            if(auth()->user()->is_firsttime_login=='0'){
+                return redirect()->route('index');
+            }        }
+            return view('signup');
     }
 
     // function to create user account
@@ -49,7 +50,11 @@ class AuthController extends Controller
     // function to render login page
     public function login(Request $request){
         if(Auth::check()){
-            return redirect()->route('index');
+            if(auth()->user()->is_firsttime_login=='0'){
+                return redirect()->route('index');
+            }else{
+                return redirect()->route('view-change-password');
+            }
         }
         return view('login');
     }
@@ -64,8 +69,7 @@ class AuthController extends Controller
        $credentials=$request->only('email','password');
        if(Auth::attempt($credentials)){
             if(auth()->user()->is_firsttime_login=='1'){
-                Session::put('email',auth()->user()->email);
-                return redirect()->route('view-change-password')->with('success','Please reset you password!');
+                return redirect()->route('view-change-password')->with('success','Please change your password!');
             }
             return redirect()->route('index')->with('success','Logged In successfully!');
        }
@@ -79,7 +83,7 @@ class AuthController extends Controller
     }
 
     // function to check email is unique or not
-    public function CheckEmailUnique(Request $request)
+    public function CheckUniqueEmail(Request $request)
     {
         $user=User::where('email',$request->email)->first();
         if($user){
@@ -101,6 +105,6 @@ class AuthController extends Controller
         $user=User::where('email',auth()->user()->email)->first();
         $user->update(['password'=>Hash::make($request->password),'is_firsttime_login'=>'0']);
         Session::flush();
-        return redirect()->route('login')->with('success','Password Reset Successfully Please login!');
+        return redirect()->route('login')->with('success','Password Changed Successfully Please login!');
     }
 }
