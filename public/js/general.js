@@ -1,13 +1,11 @@
 $(document).ready(function () {
-    $(".profile-card").hide();
 
+    // function to toggle sidebar
     $("#sidenav-btn").click(function () {
         $("aside").toggle();
     });
-    $("#msg-btn").click(function () {
-        $(".message-list").slideToggle();
-    });
 
+    // Display time and day on day time card
     let datetime = new Date();
     let hour = datetime.getHours() % 12 || 12;
     let minute = datetime.getMinutes();
@@ -127,7 +125,7 @@ $(document).ready(function () {
         }
     }
 
-    // Submit button
+   
     // $("#adduserbtn").click(function () {
     //     validateFirstname();
     //     validateLastname();
