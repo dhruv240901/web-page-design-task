@@ -24,7 +24,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'owner_id',
-        'is_firsttime_login'
+        'is_first_login'
     ];
 
     /**
