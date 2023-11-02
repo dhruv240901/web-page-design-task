@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ auth()->user()->name }}</h5>
+                                <h5 class="card-title">{{ auth()->user()->firstname }} {{ auth()->user()->lastname }}</h5>
                                 <a href="#">{{ auth()->user()->email }}</a>
                             </div>
                         </div>
