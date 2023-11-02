@@ -18,9 +18,9 @@ class AddUserMail extends Mailable
      */
     public function __construct($userdata,$randompassword,$authuser)
     {
-        $this->userdata=$userdata;
+        $this->userdata      =$userdata;
         $this->randompassword=$randompassword;
-        $this->authuser=$authuser;
+        $this->authuser      =$authuser;
     }
 
     /**
