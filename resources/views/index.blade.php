@@ -261,6 +261,26 @@ $(document).ready(function (){
                             }
                         }
                     });
+                }else{
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{route('check_edit_unique_email')}}',
+                        data: { _token:$('#csrf-token').val(),
+                                email: $("#Email").val(),
+                                user_id:$('#user_id').val()
+                        },
+                        success: function (response) {
+                            console.log(response)
+                            if (response=='false') {
+                                $("#exampleInputEmail-error").show();
+                                $("#exampleInputEmail-error").html("Email Id already exist");
+                                emailError = false;
+                            } else {
+                                $("#exampleInputEmail-error").hide();
+                                emailError=true;
+                            }
+                        }
+                    });
                 }
             }
 

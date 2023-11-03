@@ -5,28 +5,35 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add User</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            @error('email')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
             <div class="modal-body">
                 <form id="userform" method="POST">
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                     <input type="hidden" value="" id="user_id" name="user_id">
                     <div class="mb-3">
                         <label for="exampleInputfirstname" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp" name="firstname">
+                        <input type="text" class="form-control" id="firstname" aria-describedby="emailHelp"
+                            name="firstname">
                         <label id="exampleInputfirstname-error" class="error" for="exampleInputfirstname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputlastname" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp" name="lastname">
+                        <input type="text" class="form-control" id="lastname" aria-describedby="emailHelp"
+                            name="lastname">
                         <label id="exampleInputlastname-error" class="error" for="exampleInputlastname"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" name="email">
+                        <input type="email" class="form-control" id="Email" aria-describedby="emailHelp"
+                            name="email">
                         <label id="exampleInputEmail-error" class="error" for="exampleInputEmail"></label>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPhone" class="form-label">Phone number</label>
-                        <input type="text" class="form-control" id="Phone" aria-describedby="emailHelp" name="phone">
+                        <input type="text" class="form-control" id="Phone" aria-describedby="emailHelp"
+                            name="phone">
                         <label id="exampleInputPhone-error" class="error" for="exampleInputPhone"></label>
                     </div>
                 </form>
@@ -38,4 +45,3 @@
         </div>
     </div>
 </div>
-

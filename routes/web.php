@@ -18,12 +18,13 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('signup', [AuthController::class,'signup'])->name('signup');
-Route::post('signup', [AuthController::class,'CustomSignup'])->name('custom-signup');
-Route::post('checkUniqueEmail', [AuthController::class,'CheckUniqueEmail'])->name('check_unique_email');
+Route::post('signup', [AuthController::class,'customSignup'])->name('custom-signup');
+Route::post('checkUniqueEmail', [AuthController::class,'checkUniqueEmail'])->name('check_unique_email');
+Route::post('checkEditUniqueEmail', [AuthController::class,'checkEditUniqueEmail'])->name('check_edit_unique_email');
 Route::get('login',[AuthController::class,'login'])->name('login');
-Route::post('login', [AuthController::class,'CustomLogin'])->name('custom-login');
-Route::get('changePassword', [AuthController::class,'ViewChangePassword'])->name('view-change-password')->middleware('auth');
-Route::post('changePassword', [AuthController::class,'ChangePassword'])->name('change-password')->middleware('auth');
+Route::post('login', [AuthController::class,'customLogin'])->name('custom-login');
+Route::get('changePassword', [AuthController::class,'viewChangePassword'])->name('view-change-password')->middleware('auth');
+Route::post('changePassword', [AuthController::class,'changePassword'])->name('change-password')->middleware('auth');
 
 Route::group(['middleware' => ['auth','firstlogin']], function(){
     Route::get('logout', [AuthController::class,'logout'])->name('logout');

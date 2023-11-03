@@ -9,7 +9,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-     // function to render signup form
+     /* function to render signup form */
     public function signup(){
         if(Auth::check()){
             return redirect()->route('index');
@@ -17,8 +17,8 @@ class AuthController extends Controller
         return view('signup');
     }
 
-    // function to create user account
-    public function CustomSignup(Request $request){
+    /* function to create user account */
+    public function customSignup(Request $request){
        $validator=$request->validate([
             'firstname'       =>'required',
             'lastname'        =>'required',
@@ -46,7 +46,7 @@ class AuthController extends Controller
        }
     }
 
-    // function to render login page
+    /* function to render login page */
     public function login(){
         if(Auth::check()){
             return redirect()->route('index');
@@ -54,8 +54,8 @@ class AuthController extends Controller
         return view('login');
     }
 
-    // function to login user into their account
-    public function CustomLogin(Request $request){
+    /* function to login user into their account */
+    public function customLogin(Request $request){
         $validator=$request->validate([
             'email'    =>'required|email',
             'password' =>'required|min:6'
@@ -71,31 +71,43 @@ class AuthController extends Controller
        return redirect()->route('login')->with('error','Invalid Credentials!');
     }
 
-    // function to logout user
+    /* function to logout user */
     public function logout(){
        auth()->logout();
        return redirect()->route('index')->with('success','Logout Successfully!');
     }
 
-    // function to check email is unique or not
-    public function CheckUniqueEmail(Request $request)
+    /* function to check email is unique or not during signup and adding user */
+    public function checkUniqueEmail(Request $request)
     {
         $user=User::where('email',$request->email)->first();
         if($user){
-            return 'false';
+            echo 'false';
         }else{
-            return 'true';
+            echo 'true';
         }
     }
 
-    // function to render change password form
-    public function ViewChangePassword()
+     /* function to check email is unique or not during editing user */
+    public function checkEditUniqueEmail(Request $request)
+    {
+        $users=User::where('email',$request->email)->where('id', '!=', $request->user_id)->get();
+        foreach($users as $k=>$v){
+            if($request->email==$v->email){
+                echo 'false';
+            }else{
+                echo 'true';
+            }
+        }
+    }
+    /* function to render change password form */
+    public function viewChangePassword()
     {
         return view('changepassword');
     }
 
-    // function to update password
-    public function ChangePassword(Request $request)
+    /* function to update password */
+    public function changePassword(Request $request)
     {
         $user=User::where('email',auth()->user()->email)->first();
         $user->update(['password'=>Hash::make($request->password),'is_first_login'=>'0']);
