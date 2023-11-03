@@ -62,11 +62,10 @@ Before you begin, ensure you have met the following requirements:
         MAIL_FROM_ADDRESS="hello@example.com"
         MAIL_FROM_NAME="${APP_NAME}"
 
-        ```bash
         QUEUE_CONNECTION=database
 
     2. Run the following command:
-    
+
         ```bash
         php artisan queue:work
 
