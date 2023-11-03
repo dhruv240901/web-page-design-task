@@ -50,9 +50,25 @@ Before you begin, ensure you have met the following requirements:
 
 8. Access the application in your web browser at http://localhost:8000.
 9. While adding the user perform the following steps:
+    1. Set Mail Credential and Queue Connection in .env file
 
-    ```bash
-   php artisan queue:work
+        ```bash
+        MAIL_MAILER=smtp
+        MAIL_HOST=mailpit
+        MAIL_PORT=1025
+        MAIL_USERNAME=null
+        MAIL_PASSWORD=null
+        MAIL_ENCRYPTION=null
+        MAIL_FROM_ADDRESS="hello@example.com"
+        MAIL_FROM_NAME="${APP_NAME}"
+
+        ```bash
+        QUEUE_CONNECTION=database
+
+    2. Run the following command:
+    
+        ```bash
+        php artisan queue:work
 
 ## Features
 1. Render Sidebar Elements: In the application homepage, the sidebar elements are 
