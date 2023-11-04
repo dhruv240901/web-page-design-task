@@ -37,7 +37,7 @@ class UserController extends Controller
             'firstname' =>'required',
             'lastname'  =>'required',
             'email'     =>'required|email|unique:users',
-            'phone'     =>'required|min:10|max:10'
+            'phone'     =>'required|regex:"^[0-9]{10}$"'
         ]);
 
         $randompassword=rand(100000,999999);
@@ -54,11 +54,13 @@ class UserController extends Controller
         $userdata=User::create($insertdata);
         $authuser=Auth::user();
 
-        dispatch(function() use ($userdata, $randompassword,$authuser){
-            Mail::to($userdata['email'])->send(new AddUserMail($userdata,$randompassword,$authuser));
-        })->delay(now()->addSeconds(5));
+        if($userdata){
 
+            dispatch(function() use ($userdata, $randompassword,$authuser){
+                Mail::to($userdata['email'])->send(new AddUserMail($userdata,$randompassword,$authuser));
+            })->delay(now()->addSeconds(5));
 
+        }
         $response=$this->response($userdata,'User Created Successfully');
         return $response;
     }
@@ -70,14 +72,13 @@ class UserController extends Controller
             'firstname' =>'required',
             'lastname'  =>'required',
             'email'     =>'required|email',
-            'phone'     =>'required|min:10|max:10'
+            'phone'     =>'required|regex:"^[0-9]{10}$"'
         ]);
 
         $user=User::findOrFail($request->user_id);
         $updatedata=[
             'firstname' =>$request->firstname,
             'lastname'  =>$request->lastname,
-            'email'     =>$request->email,
             'phone'     =>$request->phone
         ];
         $updateuser=$user->update($updatedata);

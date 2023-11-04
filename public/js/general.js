@@ -125,7 +125,7 @@ $(document).ready(function () {
         }
     }
 
-   
+
     // $("#adduserbtn").click(function () {
     //     validateFirstname();
     //     validateLastname();
@@ -157,16 +157,16 @@ $("#signupform").validate({
         email: {
             required: true,
             email: true,
-            remote: {
-                url: "/checkUniqueEmail",
-                type: "post",
-                data: {
-                    email: function() {
-                    return $( "#email" ).val();
-                    },
-                    '_token':$("#csrf-token").val(),
-                }
-            }
+            // remote: {
+            //     url: "/checkUniqueEmail",
+            //     type: "post",
+            //     data: {
+            //         email: function() {
+            //             return $( "#email" ).val();
+            //         },
+            //         '_token':$("#csrf-token").val(),
+            //     }
+            // }
         },
         phone:{
             required: true,
@@ -190,7 +190,7 @@ $("#signupform").validate({
         email: {
             required: "Please enter your email",
             email: "Please enter valid email",
-            remote:"Email Id already exists"
+            // remote:"Email Id already exists"
         },
         phone:{
             required: "Please enter your phone number",

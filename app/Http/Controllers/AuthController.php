@@ -23,7 +23,7 @@ class AuthController extends Controller
             'firstname'       =>'required',
             'lastname'        =>'required',
             'email'           =>'required|email|unique:users',
-            'phone'           =>'required|min:10|max:10',
+            'phone'           =>'required|regex:"^[0-9]{10}$"',
             'password'        =>'required|min:6',
             'confirmpassword' =>'required|min:6|same:password'
        ]);
@@ -68,7 +68,7 @@ class AuthController extends Controller
             }
             return redirect()->route('index')->with('success','Logged In successfully!');
        }
-       return redirect()->route('login')->with('error','Invalid Credentials!');
+       return redirect()->route('login')->with('error','Invalid Credentials or Your Account is deleted!');
     }
 
     /* function to logout user */
@@ -80,26 +80,15 @@ class AuthController extends Controller
     /* function to check email is unique or not during signup and adding user */
     public function checkUniqueEmail(Request $request)
     {
+
         $user=User::where('email',$request->email)->first();
         if($user){
-            echo 'false';
+            return false;
         }else{
-            echo 'true';
+            return true;
         }
     }
 
-     /* function to check email is unique or not during editing user */
-    public function checkEditUniqueEmail(Request $request)
-    {
-        $users=User::where('email',$request->email)->where('id', '!=', $request->user_id)->get();
-        foreach($users as $k=>$v){
-            if($request->email==$v->email){
-                echo 'false';
-            }else{
-                echo 'true';
-            }
-        }
-    }
     /* function to render change password form */
     public function viewChangePassword()
     {

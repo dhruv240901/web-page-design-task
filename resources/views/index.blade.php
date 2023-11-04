@@ -101,6 +101,7 @@ function openaddmodal()
     $('.modal-title').html('');
     $('.modal-title').html('Add User');
     $('#user_id').val('');
+    $("#Email").prop("readonly", false);
     $('#userform')[0].reset();
     $('.error').hide()
     $('#userbtn').html('');
@@ -115,6 +116,7 @@ function openeditmodal(id)
     $('#firstname').val($('#firstname'+id).html())
     $('#lastname').val($('#lastname'+id).html())
     $('#Email').val($('#email'+id).html())
+    $("#Email").prop("readonly", true);
     $('#Phone').val($('#phone'+id).html())
     $('.error').hide()
     $('#userbtn').html('');
@@ -243,7 +245,6 @@ $(document).ready(function (){
                 $("#exampleInputEmail-error").html("Please enter valid email");
                 emailError = false;
             } else {
-                if($('#user_id').val()==""){
                     $.ajax({
                         type: 'POST',
                         url: '{{route('check_unique_email')}}',
@@ -251,7 +252,8 @@ $(document).ready(function (){
                                 email: $("#Email").val()
                         },
                         success: function (response) {
-                            if (response=='false') {
+                            console.log(response);
+                            if (response==false) {
                                 $("#exampleInputEmail-error").show();
                                 $("#exampleInputEmail-error").html("Email Id already exist");
                                 emailError = false;
@@ -261,27 +263,6 @@ $(document).ready(function (){
                             }
                         }
                     });
-                }else{
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{route('check_edit_unique_email')}}',
-                        data: { _token:$('#csrf-token').val(),
-                                email: $("#Email").val(),
-                                user_id:$('#user_id').val()
-                        },
-                        success: function (response) {
-                            console.log(response)
-                            if (response=='false') {
-                                $("#exampleInputEmail-error").show();
-                                $("#exampleInputEmail-error").html("Email Id already exist");
-                                emailError = false;
-                            } else {
-                                $("#exampleInputEmail-error").hide();
-                                emailError=true;
-                            }
-                        }
-                    });
-                }
             }
 
         }

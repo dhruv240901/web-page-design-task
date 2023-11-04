@@ -20,7 +20,6 @@ Route::get('/', [HomeController::class,'index'])->name('index');
 Route::get('signup', [AuthController::class,'signup'])->name('signup');
 Route::post('signup', [AuthController::class,'customSignup'])->name('custom-signup');
 Route::post('checkUniqueEmail', [AuthController::class,'checkUniqueEmail'])->name('check_unique_email');
-Route::post('checkEditUniqueEmail', [AuthController::class,'checkEditUniqueEmail'])->name('check_edit_unique_email');
 Route::get('login',[AuthController::class,'login'])->name('login');
 Route::post('login', [AuthController::class,'customLogin'])->name('custom-login');
 Route::get('changePassword', [AuthController::class,'viewChangePassword'])->name('view-change-password')->middleware('auth');
