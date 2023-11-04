@@ -83,3 +83,8 @@ Before you begin, ensure you have met the following requirements:
    the on-screen instructions to create, read, update, or delete users.
 2. AJAX is used to perform these operations without reloading the entire page, 
    providing a seamless user experience.
+
+## Screenshots
+1. Index Page
+
+   ![Screenshot: Index Page](screenshots/Screenshot1.png)
