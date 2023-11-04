@@ -90,6 +90,12 @@
 @endsection
 @section('jscontent')
 var table=$('#user_table').DataTable({
+    "columnDefs": [
+            {
+                "targets": [5], // Replace 'columnIndex' with the index of the column you want to disable sorting for (0-based index)
+                "orderable": false
+            }
+        ],
     "createdRow" : function ( row, data_use, dataIndex ) {
         $(row).attr('id', dataIndex);
     },
