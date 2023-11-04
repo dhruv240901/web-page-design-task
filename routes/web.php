@@ -31,6 +31,5 @@ Route::group(['middleware' => ['auth','firstlogin']], function(){
         Route::post('store',[UserController::class,'store'])->name('store-user');
         Route::post('update',[UserController::class,'update'])->name('update-user');
         Route::post('delete',[UserController::class,'destroy'])->name('delete-user');
-        Route::post('userlist',[UserController::class,'userlist'])->name('user-list');
     });
 });
