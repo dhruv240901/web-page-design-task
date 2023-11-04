@@ -107,10 +107,10 @@ This is the add user modal form and by submitting this form the logged in user c
 
 ![EditModal!](https://user-images.githubusercontent.com/146160551/280462397-8d1cad96-95b4-42f6-8bb6-7726eb8bb70d.png)
 
-This the edit user modal form. The logged in user can update firstname, lastname and phone number of his/her added users.
+This is the edit user modal form. The logged in user can update firstname, lastname and phone number of his/her added users.
 
 5. Delete User Alert
 
 ![DeleteUser!](https://user-images.githubusercontent.com/146160551/280462409-4f840f66-3769-4799-8ee5-1b2c4678e713.png)
 
-This the confirm sweet alert the logged in user can get on deleting user.
+This is the confirm sweet alert the logged in user can get on deleting user.
