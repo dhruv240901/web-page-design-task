@@ -87,4 +87,4 @@ Before you begin, ensure you have met the following requirements:
 ## Screenshots
 1. Index Page
 
-   ![Screenshot: Index Page](screenshots/Screenshot1.png)
+   ![Screenshot: Index Page](https://github.com/dhruv240901/web-page-design-task/blob/develop/screenshots/Screenshot1.png)
