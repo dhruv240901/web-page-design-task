@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="display-area p-3">
+    <div class="@auth  @if(auth()->user()->is_first_login=='0') display-area @endif @endauth p-3 ">
         @include('components.flash')
 
         <div class="row page-titles mt-3 day-time mx-5 float-end">
@@ -245,6 +245,7 @@ $(document).ready(function (){
                 $("#exampleInputEmail-error").html("Please enter valid email");
                 emailError = false;
             } else {
+                if($('#user_id').val()==""){
                     $.ajax({
                         type: 'POST',
                         url: '{{route('check_unique_email')}}',
@@ -263,6 +264,7 @@ $(document).ready(function (){
                             }
                         }
                     });
+                }
             }
 
         }

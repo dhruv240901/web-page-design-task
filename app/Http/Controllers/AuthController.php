@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Hash;
 use App\Models\User;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -19,31 +20,28 @@ class AuthController extends Controller
 
     /* function to create user account */
     public function customSignup(Request $request){
-       $validator=$request->validate([
+       $validator=Validator::make($request->all(),[
             'firstname'       =>'required',
             'lastname'        =>'required',
-            'email'           =>'required|email|unique:users',
+            'email'           =>'unique:users|required|email',
             'phone'           =>'required|regex:"^[0-9]{10}$"',
             'password'        =>'required|min:6',
             'confirmpassword' =>'required|min:6|same:password'
-       ]);
+       ],['email.unique' => 'Email Id already exists']);
 
-       $checkemailunique=User::where('email',$request->email)->first();
+       if($validator->fails()) {
+            return redirect()->route('signup')->withErrors($validator);
+       }
 
-       if($checkemailunique!=null){
-            return redirect()->route('signup')->with('error','Email Id already exists');
-       }
-       else{
-            $insertdata=[
-                'firstname' =>$request->firstname,
-                'lastname'  =>$request->lastname,
-                'email'     =>$request->email,
-                'phone'     =>$request->phone,
-                'password'  =>Hash::make($request->password),
-            ];
-            User::create($insertdata);
-            return redirect()->route('login')->with('success','Account created successfully!');
-       }
+       $insertdata=[
+            'firstname' =>$request->firstname,
+            'lastname'  =>$request->lastname,
+            'email'     =>$request->email,
+            'phone'     =>$request->phone,
+            'password'  =>Hash::make($request->password),
+        ];
+        User::create($insertdata);
+        return redirect()->route('login')->with('success','Account created successfully!');
     }
 
     /* function to render login page */
@@ -98,7 +96,7 @@ class AuthController extends Controller
     /* function to update password */
     public function changePassword(Request $request)
     {
-        $user=User::where('email',auth()->user()->email)->first();
+        $user=User::where('email',auth()->user()->email)->firstOrFail();
         $user->update(['password'=>Hash::make($request->password),'is_first_login'=>'0']);
         return redirect()->route('login')->with('success','Password Changed Successfully Please login!');
     }

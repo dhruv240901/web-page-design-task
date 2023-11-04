@@ -4,6 +4,9 @@
     <form class="col-md-4 border rounded pb-3" action="{{ route('custom-signup') }}" method="POST" id="signupform">
         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
         @include('components.flash')
+        @if($errors->has('email'))
+            <div class="alert alert-danger" role="alert" id="message">{{ $errors->first('email') }}</div>
+        @endif
         <h3 class="text-center">Sign Up</h3>
         <div class="mb-3 px-4">
             <label for="exampleInputFirstName" class="form-label">First Name</label>

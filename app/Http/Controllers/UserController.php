@@ -55,12 +55,11 @@ class UserController extends Controller
         $authuser=Auth::user();
 
         if($userdata){
-
             dispatch(function() use ($userdata, $randompassword,$authuser){
                 Mail::to($userdata['email'])->send(new AddUserMail($userdata,$randompassword,$authuser));
             })->delay(now()->addSeconds(5));
-
         }
+        
         $response=$this->response($userdata,'User Created Successfully');
         return $response;
     }
@@ -68,10 +67,9 @@ class UserController extends Controller
     /* function to update user */
     public function update(Request $request)
     {
-        $validator=$request->validate([
+        $request->validate([
             'firstname' =>'required',
             'lastname'  =>'required',
-            'email'     =>'required|email',
             'phone'     =>'required|regex:"^[0-9]{10}$"'
         ]);
 
