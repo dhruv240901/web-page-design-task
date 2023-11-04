@@ -84,3 +84,33 @@ Before you begin, ensure you have met the following requirements:
 2. AJAX is used to perform these operations without reloading the entire page, 
    providing a seamless user experience.
 
+## Screenshots
+1. Login Page
+
+![LoginPage!](https://user-images.githubusercontent.com/146160551/280462367-63bc6319-765e-4d87-b36c-ea52006a5244.png)
+
+Here the user Login into their account
+
+2. Index Page
+
+![IndexPage!](https://user-images.githubusercontent.com/146160551/280462379-1d2d8507-8086-40c1-940f-1a7161c17484.png)
+
+This is the index page of the web application. Here the sidebar elements are rendered using service provider. The logged in user can see users table added by him/her.
+
+3. Add User Modal
+
+![AddModal!](https://user-images.githubusercontent.com/146160551/280462385-a1ce639a-85d9-480f-b9c3-e6f0744fce7f.png)
+
+This is the add user modal form and by submitting this form the logged in user can add other user and the added user can get a mail with the current password. The added user can login with this password and change the password after login.
+
+4. Edit User Modal
+
+![EditModal!](https://user-images.githubusercontent.com/146160551/280462397-8d1cad96-95b4-42f6-8bb6-7726eb8bb70d.png)
+
+This is the edit user modal form. The logged in user can update firstname, lastname and phone number of his/her added users.
+
+5. Delete User Alert
+
+![DeleteUser!](https://user-images.githubusercontent.com/146160551/280462409-4f840f66-3769-4799-8ee5-1b2c4678e713.png)
+
+This is the confirm sweet alert the logged in user can get on deleting user.
