@@ -259,7 +259,6 @@ $(document).ready(function (){
                                 email: $("#Email").val()
                         },
                         success: function (response) {
-                            console.log(response);
                             if (response==false) {
                                 $("#exampleInputEmail-error").show();
                                 $("#exampleInputEmail-error").html("Email Id already exist");
