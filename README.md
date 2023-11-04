@@ -27,7 +27,7 @@ Before you begin, ensure you have met the following requirements:
    ```bash
    composer install
 
-4. Create a .env file by copying the .env.example file and configure your database, queue
+4. Create a .env file by copying the .env.example file and configure your database
    and mail settings:
 
    ```bash
@@ -84,7 +84,3 @@ Before you begin, ensure you have met the following requirements:
 2. AJAX is used to perform these operations without reloading the entire page, 
    providing a seamless user experience.
 
-## Screenshots
-1. Index Page
-
-   ![Screenshot: Index Page](https://github.com/dhruv240901/web-page-design-task/blob/develop/screenshots/Screenshot1.png)
